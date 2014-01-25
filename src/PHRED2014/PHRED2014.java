@@ -8,7 +8,7 @@
 //package edu.wpi.first.wpilibj.templates;
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
-
+import java.lang.Math.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -16,27 +16,27 @@ import edu.wpi.first.wpilibj.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class PHRED2014 extends IterativeRobot implements RobotMap{
-    
+public class PHRED2014 extends IterativeRobot  implements RobotMap{
+    TrainDrive trainDrive = new TrainDrive();
+    ObjM ObjMan = new ObjM();
     // This method is run when the robot is first started    
     public void robotInit() {
-        DriveTrain driveRobot = new DriveTrain();
-        ObjectManipulation obMan = new ObjectManipulation();
     }
 
     // This method is called once prior to autonomous
     public void autonomousInit(){
         Autonomous auto = new Autonomous();
+        trainDrive.Safety(false);
     }
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-
+        ObjMan.getGyroAngle();
     }
 
     //This method is called once prior to teleop
     public void teleopInit(){
-        
+     
     }
 
     // This method is called periodically during operator control

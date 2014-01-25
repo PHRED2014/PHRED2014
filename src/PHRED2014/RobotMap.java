@@ -15,6 +15,10 @@ public interface RobotMap {
     //Global Constants
     public final static int lfSonicSensorPort1 = 1;
     public final static int lfSonicSensorPort2 = 2;
+    public final static int SpikeI = 1;
+    public final static int SpikeII = 2;
+    public final static int SpikeIII = 3;
+    public final static int SpikeIV = 4;
     
     
     
