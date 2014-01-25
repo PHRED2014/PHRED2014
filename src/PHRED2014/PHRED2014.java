@@ -18,8 +18,6 @@ import edu.wpi.first.wpilibj.*;
  */
 public class PHRED2014 extends IterativeRobot implements RobotMap{
     
-    //Comment added to test github.
-    
     // This method is run when the robot is first started    
     public void robotInit() {
         DriveTrain driveRobot = new DriveTrain();
