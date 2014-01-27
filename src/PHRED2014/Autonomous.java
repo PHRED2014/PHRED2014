@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.*;
 /**
  *
  * @author PHRED
+ * 
+ * Added comment to test commit from netbeans
  */
 public class Autonomous implements RobotMap{
     
@@ -22,4 +24,5 @@ public class Autonomous implements RobotMap{
         lfSonicSensor = new Ultrasonic(lfSonicSensorPort1,lfSonicSensorPort2);
     }
     //Methods
+    
 }
