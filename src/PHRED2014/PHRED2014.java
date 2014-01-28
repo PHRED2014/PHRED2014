@@ -8,7 +8,7 @@
 //package edu.wpi.first.wpilibj.templates;
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
-import java.lang.Math.*;
+//import java.lang.Math.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
