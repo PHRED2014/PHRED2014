@@ -42,7 +42,9 @@ public interface RobotMap {
     public final static int ServoI = 1; //Servo Thingy for the optics. They came from behind!
     public final static int ServoII = 2;
     
-    public final static int GoalieMotor = 1; //Motor for the GOALIE!!! 
+    public final static int GoalieMotor = 1; //Motor for the GOALIE!!!
+    
+    
     
     
 

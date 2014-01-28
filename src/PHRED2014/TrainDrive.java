@@ -12,19 +12,19 @@ import edu.wpi.first.wpilibj.*;
  *
  * @author PHRED
  */
-public class TrainDrive  implements RobotMap{
+public class TrainDrive implements RobotMap{
     
     //Instance variables: motors, sensors, etc.
-    OI COVOP = new OI();
     private RobotDrive driveMotors;
     private double XJoy = 0;
     private double YJoy = 0;
     private double ZJoy = 0;
+    private OI COVOP;
     
     //Contructor(s)
-    public TrainDrive(){
+    public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
-         //etc
+         COVOP = oi;
     }
     
     //Methods(functions)

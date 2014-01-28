@@ -13,4 +13,21 @@ package PHRED2014;
  */
 public class Teleoperated implements RobotMap{
     
+    //Instance Variables
+    private TrainDrive trainDrive;
+    private ObjM ObjMan;
+    
+    //Constructor(s)
+    public Teleoperated(TrainDrive td, ObjM om){
+        trainDrive = td;
+        ObjMan = om;
+        
+        trainDrive.InvertMecha();
+    }
+    
+    //Methods
+    public void PassScoreBlock(){
+        trainDrive.MechaDrive();
+    }
+    
 }

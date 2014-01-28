@@ -18,26 +18,17 @@ public class ObjM implements RobotMap{
     private Relay omMotors2;
     private Relay omMotors3;
     private Relay omMotors4;
-    private Ultrasonic soundSensor;
-    private Gyro GG; //This is the Guidance Gyro
-    
+    private OI COVOP;
     
     //Constructor(s)
-    public ObjM(){
+    public ObjM(OI oi){
         omMotors1 = new Relay(SpikeI);
         omMotors2 = new Relay(SpikeII);
         omMotors3 = new Relay(SpikeIII);
         omMotors4 = new Relay(SpikeIV);
-        soundSensor = new Ultrasonic(3,4);
-        GG = new Gyro(1);
-        //etc
-    }
-    
-    public double getGyroAngle() {
-        return GG.getAngle();
+        COVOP = oi;
     }
     
     //Methods
-    //test whether GIT works
     
 }

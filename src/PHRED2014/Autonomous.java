@@ -5,7 +5,6 @@
  */
 
 package PHRED2014;
-
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -17,12 +16,22 @@ import edu.wpi.first.wpilibj.*;
 public class Autonomous implements RobotMap{
     
     //Instance variables
-    private Ultrasonic lfSonicSensor;
+    private TrainDrive trainDrive;
+    private ObjM ObjMan;
 
     //Contstructor(s)
-    public Autonomous(){
-        lfSonicSensor = new Ultrasonic(SanicI,SanicII);
+    public Autonomous(TrainDrive td, ObjM om){
+        trainDrive = td;
+        ObjMan = om;
+        
+        trainDrive.Safety(false);
     }
     //Methods
+    
+    public void RunAutonomous(int script){
+        
+        //Maybe use an array indexed by script to run the appropriate
+        //autonomous routine?
+    }
     
 }
