@@ -21,7 +21,7 @@ public class Autonomous implements RobotMap{
 
     //Contstructor(s)
     public Autonomous(){
-        lfSonicSensor = new Ultrasonic(lfSonicSensorPort1,lfSonicSensorPort2);
+        lfSonicSensor = new Ultrasonic(SanicI,SanicII);
     }
     //Methods
     
