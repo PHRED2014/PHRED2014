@@ -36,12 +36,12 @@ public class PHRED2014 extends IterativeRobot  implements RobotMap{
 
     //This method is called once prior to teleop
     public void teleopInit(){
-     
+        trainDrive.InvertMecha();
     }
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
-        
+        trainDrive.MechaDrive();
     }
     
     // This function is called periodically during test mode
