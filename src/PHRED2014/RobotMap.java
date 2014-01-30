@@ -24,6 +24,10 @@ public interface RobotMap {
     public final static int SpikeIII = 3;
     public final static int SpikeIV = 4;
     
+    public final static int PWMI = 10;
+    public final static int PWMII = 8;
+    public final static int PWMIII = 9;
+    
     public final static int SolI = 1; //Soleniods
     public final static int SolII = 2;
     public final static int SolIII = 3;

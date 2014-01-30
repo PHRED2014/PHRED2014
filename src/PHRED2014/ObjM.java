@@ -14,21 +14,32 @@ import edu.wpi.first.wpilibj.*;
 public class ObjM implements RobotMap{
     
     //Instance variables: Motors, Sensors, etc
-    private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
-    private Relay omMotors2;
-    private Relay omMotors3;
-    private Relay omMotors4;
+    //private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
+    //private Relay omMotors2;
+    //private Relay omMotors3;
+   // private Relay omMotors4;
     private OI COVOP;
+    
+    private Victor ForkMotor;
+    private Victor ArmMotor;
+    private Victor BeltMotor;
     
     //Constructor(s)
     public ObjM(OI oi){
-        omMotors1 = new Relay(SpikeI);
-        omMotors2 = new Relay(SpikeII);
-        omMotors3 = new Relay(SpikeIII);
-        omMotors4 = new Relay(SpikeIV);
+        //omMotors1 = new Relay(SpikeI);
+        //omMotors2 = new Relay(SpikeII);
+        //omMotors3 = new Relay(SpikeIII);
+        //omMotors4 = new Relay(SpikeIV);
         COVOP = oi;
+        
+        ForkMotor = new Victor(PWMI);
+        ArmMotor = new Victor(PWMII);
+        BeltMotor = new Victor(PWMIII);
     }
     
     //Methods
+    public void omDrive(){
+        
+    }
     
 }
