@@ -38,8 +38,26 @@ public class ObjM implements RobotMap{
     }
     
     //Methods
-    public void omDrive(){
-        
+    public void VerticalFork(){ // Forklift up and down
+        double Xval = COVOP.getXBoxAxisValue(LStickY); // Xval is a method specfic variable that is where we put the axis values
+        ForkMotor.set(Xval);
     }
     
+    public void AerialArm(){ // Arm movement
+        double Xval = COVOP.getXBoxAxisValue(RStickY); // Again, we reinitialize Xval because it's specific to this method only :|
+        ArmMotor.set(Xval);    
+    }
+    
+    public void TankBelt(){ // Belt movement (It looks like a tank)
+        double Xval = COVOP.getXBoxTrigger();
+        
+        if(Xval > 0){
+            BeltMotor.set(0.5);
+        }
+        else if(Xval < 0){
+            BeltMotor.set(-0.5);
+        }else{
+            BeltMotor.set(0.0);
+        }
+    }
 }

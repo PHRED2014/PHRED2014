@@ -48,6 +48,20 @@ public interface RobotMap {
     
     public final static int GoalieMotor = 1; //Motor for the GOALIE!!!
     
+    // -- OI VARIABLES -- //
+    
+    // Joystick axis and buttons 
+    public final static int XAxis = 1;
+    public final static int YAxis = 2;
+    public final static int ZAxis = 3;
+    
+    // Gamepad axis and buttons
+    public final static int LStickX = 1;
+    public final static int LStickY = 2;
+    public final static int Trigger = 3;
+    public final static int RStickX = 4;
+    public final static int RStickY = 5;
+    public final static int DPadX = 6;
     
     
     

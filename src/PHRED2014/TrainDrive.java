@@ -43,7 +43,7 @@ public class TrainDrive implements RobotMap{
     public void InvertMecha(){
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-    }
+    }    
     
 }
 

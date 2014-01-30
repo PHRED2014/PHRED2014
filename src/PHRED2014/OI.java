@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.*;
 public class OI implements RobotMap{
     
     private Joystick MechStick;
+    private Joystick XStick;
     private int XJoy = 1;
     private int YJoy = 2;
     private int ZJoy = 3;
@@ -24,6 +25,7 @@ public class OI implements RobotMap{
     
     public OI(){
         MechStick = new Joystick(3);
+        XStick = new Joystick(4);
     }
     
     public double getJoyValue(int axis){
@@ -49,5 +51,40 @@ public class OI implements RobotMap{
             default:
                 return 0;
         }
+    }
+    
+    public double getXBoxAxisValue(int axis){
+        switch(axis){
+            case 1:
+                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                    return 0;
+                }else{
+                    return XStick.getRawAxis(axis);
+                }
+            case 2:
+                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                    return 0;
+                }else{
+                    return XStick.getRawAxis(axis);
+                }
+            case 4:
+                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                    return 0;
+                }else{
+                    return XStick.getRawAxis(axis);
+                }
+            case 5:
+                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                    return 0;
+                }else{
+                    return XStick.getRawAxis(axis);
+                }
+            default:
+                return 0;
+        }
+    }
+    
+    public double getXBoxTrigger(){
+        return XStick.getRawAxis(Trigger);
     }
 }
