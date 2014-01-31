@@ -1,6 +1,0 @@
-MIDlet-Name: PHRED2014
-MIDlet-Version: 1.0.0
-MIDlet-Vendor: FIRST
-MIDlet-1: PHRED2014, , edu.wpi.first.wpilibj.templates.PHRED2014
-MicroEdition-Profile: IMP-1.0
-MicroEdition-Configuration: CLDC-1.1
