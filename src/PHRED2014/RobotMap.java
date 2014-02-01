@@ -13,7 +13,7 @@ package PHRED2014;
 public interface RobotMap {
     
     //Global Constants
-    public final static int SanicI = 1; //probably undeedeed
+    public final static int SanicI = 1; // Ultrasanics
     public final static int SanicII = 2;
     public final static int SanicIII = 3;
     public final static int SanicIV = 4;
