@@ -85,6 +85,6 @@ public class OI implements RobotMap{
     }
     
     public double getXBoxTrigger(){
-        return XStick.getRawAxis(Trigger);
+        return XStick.getRawAxis(Trigger); // Triggers return numbers between 1 and -1. Right trigger is negative.
     }
 }

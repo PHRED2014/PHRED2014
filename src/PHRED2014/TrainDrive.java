@@ -20,11 +20,15 @@ public class TrainDrive implements RobotMap{
     private double YJoy = 0;
     private double ZJoy = 0;
     private OI COVOP;
+    private Servo ServoI;
+    private Servo ServoII;
     
     //Contructor(s)
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
          COVOP = oi;
+         ServoI = new Servo(1);
+         ServoII = new Servo(2);
     }
     
     //Methods(functions)
@@ -45,5 +49,17 @@ public class TrainDrive implements RobotMap{
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }    
     
+    
+    
+  
+  
+  public void setServo(){
+      double servoIangle = ServoI.getAngle();
+      double servoIIangle = ServoII.getAngle();
+      
+      ServoI.setAngle(0.0);
+      ServoII.setAngle(0.0);
+  }
+  
 }
 

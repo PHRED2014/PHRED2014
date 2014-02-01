@@ -28,6 +28,9 @@ public class Teleoperated implements RobotMap{
     //Methods
     public void PassScoreBlock(){
         trainDrive.MechaDrive();
+        ObjMan.TankBelt();
+        ObjMan.AerialArm();
+        ObjMan.VerticalFork();
     }
     
 }

@@ -17,12 +17,14 @@ public class ObjM implements RobotMap{
     //private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
     //private Relay omMotors2;
     //private Relay omMotors3;
-   // private Relay omMotors4;
+    //private Relay omMotors4;
     private OI COVOP;
     
     private Victor ForkMotor;
     private Victor ArmMotor;
     private Victor BeltMotor;
+    
+    private Encoder encoder;
     
     //Constructor(s)
     public ObjM(OI oi){
@@ -35,6 +37,10 @@ public class ObjM implements RobotMap{
         ForkMotor = new Victor(PWMI);
         ArmMotor = new Victor(PWMII);
         BeltMotor = new Victor(PWMIII);
+        
+        encoder = new Encoder(CoderI,CoderII);
+        
+        encoder.start();
     }
     
     //Methods
@@ -59,5 +65,10 @@ public class ObjM implements RobotMap{
         }else{
             BeltMotor.set(0.0);
         }
+    }
+    
+    public int Carriage(){
+        int encodercount = encoder.get();
+        return encodercount;
     }
 }
