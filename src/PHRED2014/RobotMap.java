@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package PHRED2014;
 
-/**
- *
- * @author PHRED
- */
 public interface RobotMap {
     
-    //Global Constants
+//Global Constants
     
 //Analog
     
@@ -53,14 +44,14 @@ public interface RobotMap {
     public final static int PWMII = 8;
     public final static int PWMIII = 6;
     
-    // -- OI VARIABLES -- //
+// -- OI VARIABLES -- //
     
-    // Joystick axis and buttons 
+// Joystick axis and buttons 
     public final static int XAxis = 1;
     public final static int YAxis = 2;
     public final static int ZAxis = 3;
     
-    // Gamepad axis and buttons
+// Gamepad axis and buttons
     public final static int LStickX = 1;
     public final static int LStickY = 2;
     public final static int Trigger = 3;

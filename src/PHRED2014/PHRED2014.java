@@ -5,17 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//package edu.wpi.first.wpilibj.templates;
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
-//import java.lang.Math.*;
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project update the manifest file in the resource
- * directory.
- */
+
 public class PHRED2014 extends IterativeRobot implements RobotMap{
     
     //Create Object References
