@@ -7,27 +7,17 @@
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
 
-/**
- *
- * @author PHRED
- * 
- * Edit for test
- */
 public class Autonomous implements RobotMap{
     
     //Instance variables
     private TrainDrive trainDrive;
     private ObjM ObjMan;
-  //  private Servo ServoI;
- //   private Servo ServoII;
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om){
         trainDrive = td;
         ObjMan = om;
-  //      ServoI = new Servo(1);
-  //      ServoII = new Servo(2);
-        
+
         trainDrive.Safety(false);
     }
     //Methods
