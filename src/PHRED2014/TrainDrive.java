@@ -27,13 +27,10 @@ public class TrainDrive implements RobotMap{
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
          COVOP = oi;
-    }
-         
 /* Uncomment when servos get installed         
          panServo = new Servo(ServoI);
          tiltServo = new Servo(ServoII);
-    }
-*/
+*/  }
     
     //Methods(functions)
     public void Safety(boolean onf){
