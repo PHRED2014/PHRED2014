@@ -25,17 +25,14 @@ public class TrainDrive implements RobotMap{
     
     //Contructor(s)
     public TrainDrive(OI oi){
-         driveMotors = new RobotDrive(1,2,3,4);
-         COVOP = oi;
-         ServoI = new Servo(1);
-         ServoII = new Servo(2);
+        COVOP = oi;
+        driveMotors = new RobotDrive(1,2,3,4);
+        driveMotors.setSafetyEnabled(false);
+        ServoI = new Servo(1);
+        ServoII = new Servo(2);
     }
     
     //Methods(functions)
-    public void Safety(boolean onf){
-        driveMotors.setSafetyEnabled(onf);
-    }
-    
     public void MechaDrive(){
         XJoy = COVOP.getJoyValue(1)*0.75;
         YJoy = COVOP.getJoyValue(2)*0.75;

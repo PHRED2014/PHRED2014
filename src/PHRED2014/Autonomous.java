@@ -28,7 +28,6 @@ public class Autonomous implements RobotMap{
   //      ServoI = new Servo(1);
   //      ServoII = new Servo(2);
         
-        trainDrive.Safety(false);
     }
     //Methods
     
