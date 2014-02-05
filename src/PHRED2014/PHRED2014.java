@@ -24,7 +24,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     OI COVOP;
     
     Autonomous auto;
-    Teleoperated teleOp;
     
     // This method is run when the robot is first started    
     public void robotInit() {
@@ -48,13 +47,15 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     //This method is called once prior to teleop
     public void teleopInit(){
-        //Instantiate the teleop object
-        teleOp = new Teleoperated(trainDrive, ObjMan);
+
     }
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
-        teleOp.PassScoreBlock();
+        trainDrive.MechaDrive();
+        ObjMan.TankBelt();
+        ObjMan.AerialArm();
+        ObjMan.VerticalFork();
     }
     
     // This function is called periodically during test mode
