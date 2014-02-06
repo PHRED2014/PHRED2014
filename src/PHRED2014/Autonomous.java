@@ -12,8 +12,6 @@ public class Autonomous implements RobotMap{
     public Autonomous(TrainDrive td, ObjM om){
         trainDrive = td;
         ObjMan = om;
-
-        trainDrive.Safety(false);
     }
     //Methods
     public void RunAutonomous(int script){

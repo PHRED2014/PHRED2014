@@ -16,6 +16,7 @@ public class TrainDrive implements RobotMap{
     //Contructor(s)
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
+         driveMotors.setSafetyEnabled(false);
          COVOP = oi;
 /* Uncomment when servos get installed         
          panServo = new Servo(ServoI);
