@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-//package edu.wpi.first.wpilibj.templates;
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
 
-/**
- *
- * @author PHRED
- */
 public class TrainDrive implements RobotMap{
     
     //Instance variables: motors, sensors, etc.
@@ -33,10 +23,6 @@ public class TrainDrive implements RobotMap{
 */  }
     
     //Methods(functions)
-    public void Safety(boolean onf){
-        driveMotors.setSafetyEnabled(onf);
-    }
-    
     public void MechaDrive(){
         XJoy = COVOP.getJoyValue(1)*0.75;
         YJoy = COVOP.getJoyValue(2)*0.75;

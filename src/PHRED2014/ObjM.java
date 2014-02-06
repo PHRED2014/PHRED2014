@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
 
-/**
- *
- * @author PHRED
- */
 public class ObjM implements RobotMap{
     
     //Instance variables: Motors, Sensors, etc
@@ -37,11 +28,12 @@ public class ObjM implements RobotMap{
         ForkMotor = new Victor(PWMI);
         ArmMotor = new Victor(PWMII);
         BeltMotor = new Victor(PWMIII);
-        
+ 
+/*Uncomment when encoders are added to Robot
         encoder = new Encoder(CoderI,CoderII);
-        
+        encoder.reset();
         encoder.start();
-    }
+*/    }
     
     //Methods
     public void VerticalFork(){ // Forklift up and down
@@ -66,9 +58,10 @@ public class ObjM implements RobotMap{
             BeltMotor.set(0.0);
         }
     }
-    
+
+/*Uncomment when encoders are added to the robot. Needs work.
     public int Carriage(){
         int encodercount = encoder.get();
         return encodercount;
-    }
+    }*/
 }
