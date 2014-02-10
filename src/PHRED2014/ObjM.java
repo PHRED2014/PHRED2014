@@ -14,7 +14,6 @@ public class ObjM implements RobotMap{
     private Victor ForkMotor;
     private Victor ArmMotor;
     private Victor BeltMotor;
-    
     private Encoder encoder;
     
     //Constructor(s)
@@ -50,18 +49,25 @@ public class ObjM implements RobotMap{
         double Xval = COVOP.getXBoxTrigger();
         
         if(Xval > 0){
-            BeltMotor.set(0.5);
+            BeltMotor.set(1.0);
         }
         else if(Xval < 0){
-            BeltMotor.set(-0.5);
+            BeltMotor.set(-1.0);
         }else{
             BeltMotor.set(0.0);
         }
     }
+    
+    public void deployArm(){pl("Deploying the arm");}
+    public void deployForks(){pl("Deploying the forks");}
 
-/*Uncomment when encoders are added to the robot. Needs work.
+/*Uncomment when encoders are added to the robot. Needs work: Probably belongs in VerticleFork().
     public int Carriage(){
         int encodercount = encoder.get();
         return encodercount;
-    }*/
+    }
+ */
+    //I'm tired of typing System.out.println
+    public void pl(String s){System.out.println(s);}
+    public void pl(String s, int i){System.out.println(s + i);}
 }

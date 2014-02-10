@@ -10,21 +10,22 @@ public class TrainDrive implements RobotMap{
     private double YJoy = 0;
     private double ZJoy = 0;
     private OI COVOP;
-    private Servo panServo;
-    private Servo tiltServo;
+//TODO:    private Servo panServo;
+//    private Servo tiltServo;
     
     //Contructor(s)
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
-/* Uncomment when servos get installed         
+/* TODO:Uncomment when servos get installed         
          panServo = new Servo(ServoI);
          tiltServo = new Servo(ServoII);
 */  }
     
     //Methods(functions)
     public void MechaDrive(){
+//TODO: Add smartdashboard slider tied to the speed factor
         XJoy = COVOP.getJoyValue(1)*0.75;
         YJoy = COVOP.getJoyValue(2)*0.75;
         ZJoy = COVOP.getJoyValue(3)*0.75;
@@ -32,12 +33,18 @@ public class TrainDrive implements RobotMap{
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
     }
     
+    public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous
+        driveMotors.tankDrive(leftSpeed, rightSpeed);
+    }
+    
     public void InvertMecha(){
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-    }    
+    }
+    
+    
   
-/* Uncomment when servos get installed
+/* TODO: Uncomment when servos get installed. Needs Work.
     public void setServo(){
         double servoIangle = panServo.getAngle();
         double servoIIangle = tiltServo.getAngle();

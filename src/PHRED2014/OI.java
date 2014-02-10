@@ -4,33 +4,32 @@ import edu.wpi.first.wpilibj.*;
 
 public class OI implements RobotMap{
     
+    private DriverStation driverStation;
     private Joystick MechStick;
     private Joystick XStick;
-    private int XJoy = 1;
-    private int YJoy = 2;
-    private int ZJoy = 3;
     
     public OI(){
-        MechStick = new Joystick(3);
-        XStick = new Joystick(4);
+        driverStation = DriverStation.getInstance();
+        MechStick = new Joystick(Xstreme3D);
+        XStick = new Joystick(GamePad);
     }
     
     public double getJoyValue(int axis){
         switch(axis){
-            case 1:
-                if(Math.abs(MechStick.getX()) < 0.05){
+            case XAxis:
+                if(Math.abs(MechStick.getX()) < DeadZone){
                     return 0;
                 }else{
                 return MechStick.getX();
                 }
-            case 2:
-                if(Math.abs(MechStick.getY()) < 0.05){
+            case YAxis:
+                if(Math.abs(MechStick.getY()) < DeadZone){
                     return 0;
                 }else{
                 return MechStick.getY();
                 }
-            case 3:
-                if(Math.abs(MechStick.getZ()) < 0.05){
+            case ZAxis:
+                if(Math.abs(MechStick.getZ()) < DeadZone){
                     return 0;
                 }else{
                 return MechStick.getZ();
@@ -43,25 +42,25 @@ public class OI implements RobotMap{
     public double getXBoxAxisValue(int axis){
         switch(axis){
             case 1:
-                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
                     return 0;
                 }else{
                     return XStick.getRawAxis(axis);
                 }
             case 2:
-                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
                     return 0;
                 }else{
                     return XStick.getRawAxis(axis);
                 }
             case 4:
-                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
                     return 0;
                 }else{
                     return XStick.getRawAxis(axis);
                 }
             case 5:
-                if(Math.abs(XStick.getRawAxis(axis)) < 0.05){
+                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
                     return 0;
                 }else{
                     return XStick.getRawAxis(axis);
@@ -73,5 +72,12 @@ public class OI implements RobotMap{
     
     public double getXBoxTrigger(){
         return XStick.getRawAxis(Trigger); // Triggers return numbers between 1 and -1. Right trigger is negative.
+    }
+    
+    public int getAutoID(){
+        for(int i=1; i<9; i++)
+            if(driverStation.getDigitalIn(i)){return i;}
+        
+        return 0;
     }
 }

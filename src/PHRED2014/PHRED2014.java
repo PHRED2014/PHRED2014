@@ -9,12 +9,10 @@ package PHRED2014;
 import edu.wpi.first.wpilibj.*;
 
 public class PHRED2014 extends IterativeRobot implements RobotMap{
-    
     //Create Object References
     TrainDrive trainDrive;
     ObjM ObjMan;
     OI COVOP;
-    
     Autonomous auto;
     
     // This method is run when the robot is first started    
@@ -28,13 +26,16 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called once prior to autonomous
     public void autonomousInit(){
         //Instantiate the autonomous object
-        auto = new Autonomous(trainDrive, ObjMan);
+        auto = new Autonomous(trainDrive, ObjMan, COVOP.getAutoID());
     }
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-        //Example for selecting the autonomous script
-        auto.RunAutonomous(1);
+        switch(COVOP.getAutoID()){
+            case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
+            case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
+            default: auto.driveForward();break;
+        }
     }
 
     //This method is called once prior to teleop
