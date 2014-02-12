@@ -57,10 +57,10 @@ public class ObjM implements RobotMap{
         double Xval = COVOP.getXBoxTrigger();
         
         if(Xval > 0){
-            BeltMotor.set(1.0);
+            BeltMotor.set(BELT_SPEED);
         }
         else if(Xval < 0){
-            BeltMotor.set(-1.0);
+            BeltMotor.set(-BELT_SPEED);
         }else{
             BeltMotor.set(0.0);
         }
