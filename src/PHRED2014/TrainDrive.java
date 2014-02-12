@@ -21,9 +21,9 @@ public class TrainDrive implements RobotMap{
     //Methods(functions)
     public void MechaDrive(){
 //TODO: Add smartdashboard slider tied to the speed factor
-        XJoy = COVOP.getJoyValue(1)*0.75;
-        YJoy = COVOP.getJoyValue(2)*0.75;
-        ZJoy = COVOP.getJoyValue(3)*0.75;
+        XJoy = COVOP.getJoyValue(1)*DRIVE_MOTOR_MOD;
+        YJoy = COVOP.getJoyValue(2)*DRIVE_MOTOR_MOD;
+        ZJoy = COVOP.getJoyValue(3)*DRIVE_MOTOR_MOD;
         
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
     }
