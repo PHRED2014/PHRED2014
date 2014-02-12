@@ -34,13 +34,14 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         switch(COVOP.getAutoID()){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
             case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
-            default: auto.driveForward();break;
+            case CENTER: auto.driveForward();break;
+            default: break;
         }
     }
 
     //This method is called once prior to teleop
     public void teleopInit(){
-
+        trainDrive.InvertMecha();
     }
 
     // This method is called periodically during operator control

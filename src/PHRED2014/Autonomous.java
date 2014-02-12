@@ -31,7 +31,7 @@ public class Autonomous implements RobotMap{
         switch(script){
             case WALL_LEFT:{
                 usFore = new Ultrasonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
-                usFore.setAutomaticMode(true);
+                usFore.setAutomaticMode(false);
                 usFore.setEnabled(true);
  
                 usAft = new Ultrasonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
@@ -41,7 +41,7 @@ public class Autonomous implements RobotMap{
             }
             case WALL_RIGHT:{
                 usFore = new Ultrasonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
-                usFore.setAutomaticMode(true);
+                usFore.setAutomaticMode(false);
                 usFore.setEnabled(true);
  
                 usAft = new Ultrasonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
@@ -62,7 +62,7 @@ public class Autonomous implements RobotMap{
         rangeForward = 6000; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
-        if(rangeForward < stopRange)
+        if(rangeForward > stopRange)
             trainDrive.driveLikeATank(portSpeed, starboardSpeed);
         else trainDrive.driveLikeATank(0.0, 0.0);
     }
@@ -70,9 +70,9 @@ public class Autonomous implements RobotMap{
     public void scrapeTheWall(int script){
 //TODO: Add hot goal sensing
         
-        ObjMan.deployArm(); Timer.delay(0.5);
-        ObjMan.deployForks(); Timer.delay(0.5);
-        ObjMan.AerialArm(); Timer.delay(0.5);
+        //ObjMan.deployArm(); Timer.delay(0.5);
+        //ObjMan.deployForks(); Timer.delay(0.5);
+        //ObjMan.VerticalFork(); Timer.delay(0.5);
         
         while((rangeFore = round(usFore.getRangeMM())) == 0){}
         pl("Range FORE: ", rangeFore);
@@ -87,7 +87,7 @@ public class Autonomous implements RobotMap{
         rangeDiff = rangeFore - rangeAft;
         pl("Range DIFF: ", rangeDiff);
             
-        if(rangeForward < stopRange){
+        if(rangeForward > stopRange){
             if(Math.abs(rangeDiff) > 25.4/2){
                 if(rangeDiff > 0){
                     if(script == WALL_LEFT) driveForGoal(TURN_LEFT);
@@ -109,14 +109,14 @@ public class Autonomous implements RobotMap{
         }//End Switch
 
         trainDrive.driveLikeATank(portSpeed, starboardSpeed);
-        ObjMan.AerialArm();
+        //ObjMan.VerticalFork();
     }//End driveForGoal
 
     private void scoreTheGoal(){
 //TODO:Stop the drive motors, Fork to the top, and eject the ball
     }//End scoreTheGoal
 
-    public int round(double n){
+    private int round(double n){
         if ((n % 1) >= 0.5) n++;
         return (int)(n - (n % 1));
     }//End round
