@@ -33,8 +33,6 @@ public interface RobotMap {
     public final static int CoderI = 13; //Fork Encoder
     public final static int CoderII = 14;
 
-    public final static int OpticsI = 15; //Optical sensor for sensing hot goal
-    
 //Relays
     public final static int SpikeI = 1; //Spikes for Victors and Relays?
     public final static int SpikeII = 2;
