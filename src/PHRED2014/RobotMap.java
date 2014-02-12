@@ -55,10 +55,6 @@ public interface RobotMap {
     public final static int PWMII = 8;
     public final static int PWMIII = 6;
 
-    public final static int ServoI = 11; //Servo Thingy for the optics. They came from behind!
-    public final static int ServoII = 12;
-    
-    
 /* -- OI VARIABLES -- */
 // Joystick DS Ports
     public final static int Xstreme3D = 3;
@@ -88,6 +84,4 @@ public interface RobotMap {
     public final static int STRAIGHT = 0;
     public final static int TURN_LEFT = 1;
     public final static int TURN_RIGHT = 2;
-    
-    
 }
