@@ -14,8 +14,8 @@ public class ObjM implements RobotMap{
     private Victor ForkMotor;
     private Victor BeltMotor;
     private Encoder encoder;
-    private DigitalInput LSwitchI;
-    private DigitalInput LSwitchII;
+    private DigitalInput topLimit;
+    private DigitalInput botLimit;
     
     //Constructor(s)
     public ObjM(OI oi){
@@ -27,8 +27,8 @@ public class ObjM implements RobotMap{
         
         ForkMotor = new Victor(PWMI);
         BeltMotor = new Victor(PWMIII);
-        LSwitchI = new DigitalInput(7); //top limit
-        LSwitchII = new DigitalInput(8); //bottom limit
+        topLimit = new DigitalInput(TOP_LIMIT); //top limit
+        botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
 /*Uncomment when encoders are added to Robot
         encoder = new Encoder(CoderI,CoderII);
@@ -39,9 +39,9 @@ public class ObjM implements RobotMap{
     //Methods
     public void VerticalFork(){ // Forklift up and down
         double Xval = COVOP.getXBoxAxisValue(LStickY); // Xval is a method specfic variable that is where we put the axis values
-        if (LSwitchI.get() && Xval < 0)
+        if (topLimit.get() && Xval < 0)
             Xval = 0.0;
-        if (LSwitchII.get() && Xval > 0)
+        if (botLimit.get() && Xval > 0)
             Xval = 0.0;
         ForkMotor.set(Xval);
     }
@@ -58,21 +58,20 @@ public class ObjM implements RobotMap{
             BeltMotor.set(0.0);
         }
     }
-    
-    public void deployArm(){pl("Deploying the arm");}
-    public void deployForks(){pl("Deploying the forks");}
 
-/*Uncomment when encoders are added to the robot. Needs work: Probably belongs in VerticleFork().
+/*TODO: Uncomment when encoders are added to the robot. Needs work: Probably belongs in VerticleFork().
     public int Carriage(){
         int encodercount = encoder.get();
         return encodercount;
     }
  */
+
+    
+    public void deployArm(){pl("Deploying the arm");}
+    public void deployForks(){pl("Deploying the forks");}
+
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}
     public void pl(String s, int i){System.out.println(s + i);}
-    
-    boolean lSwitchLimitI = LSwitchI.get();
-    boolean lSwitchLimitII = LSwitchII.get();
-    
+    public void pl(String s, double d){System.out.println(s + d);}
 }

@@ -13,13 +13,10 @@ public class Autonomous implements RobotMap{
 //TODO:    private Ultrasonic usForward = null;
 
     private int rangeFore, rangeAft, rangeForward, rangeDiff, stopRange;
-    private double portSpeed, starboardSpeed;
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om, int script){
 //TODO: Add smartdashboard slider tied to these speed variables
-        portSpeed = AUTO_SPEED;
-        starboardSpeed = AUTO_SPEED;
         stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;
@@ -59,61 +56,69 @@ public class Autonomous implements RobotMap{
     //Methods
     public void driveForward(){
 //TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        rangeForward = 6000; //Init to ~20ft until the forward ultrasonic sensor is installed
+        rangeForward = 6100; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange)
-            trainDrive.driveLikeATank(portSpeed, starboardSpeed);
+            trainDrive.driveLikeATank(AUTO_SPEED, AUTO_SPEED);
         else trainDrive.driveLikeATank(0.0, 0.0);
     }
     
     public void scrapeTheWall(int script){
-//TODO: Add hot goal sensing
-        
-        //ObjMan.deployArm(); Timer.delay(0.5);
+//TODO:        //ObjMan.deployArm(); Timer.delay(0.5);
         //ObjMan.deployForks(); Timer.delay(0.5);
         //ObjMan.VerticalFork(); Timer.delay(0.5);
         
-        while((rangeFore = round(usFore.getRangeMM())) == 0){}
-        pl("Range FORE: ", rangeFore);
-            
-        while((rangeAft = round(usAft.getRangeMM())) == 0){}
-        pl("Range  AFT: ", rangeAft);
-
 //TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
         rangeForward = 3048; //Init to ~10ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
-           
-        rangeDiff = rangeFore - rangeAft;
-        pl("Range DIFF: ", rangeDiff);
-            
-        if(rangeForward > stopRange){
-            if(Math.abs(rangeDiff) > 25.4/2){
-                if(rangeDiff > 0){
-                    if(script == WALL_LEFT) driveForGoal(TURN_LEFT);
-                    else driveForGoal(TURN_RIGHT);
 
-                }else if(script == WALL_LEFT) driveForGoal(TURN_RIGHT);
-                      else driveForGoal(TURN_LEFT);
+        if(rangeForward > stopRange){
+            while((rangeFore = round(usFore.getRangeMM())) == 0){}
+            pl("Range FORE: ", rangeFore);
             
-            }else driveForGoal(STRAIGHT);
-        }else scoreTheGoal();
+            while((rangeAft = round(usAft.getRangeMM())) == 0){}
+            pl("Range  AFT: ", rangeAft);
+            
+            rangeDiff = rangeFore - rangeAft;
+            pl("Range DIFF: ", rangeDiff);
+            
+            if(Math.abs(rangeDiff) > RANGE_DIFF_LIMIT){
+                if(rangeDiff > 0){
+                    if(script == WALL_LEFT){driveForGoal(TURN_LEFT);}
+                    else{driveForGoal(TURN_RIGHT);}
+                }else if(script == WALL_LEFT){driveForGoal(TURN_RIGHT);}
+                      else{driveForGoal(TURN_LEFT);}
+            }else{driveForGoal(STRAIGHT);}
+        }else{
+            driveForGoal(STOP);
+            strafeToScorePosition();
+            scoreTheGoal();
+        }
     }//End while
 
     private void driveForGoal(int direction){
+        double portSpeed = AUTO_SPEED;
+        double starboardSpeed = AUTO_SPEED;
         
         switch (direction){
-            case TURN_LEFT: pl("Turn Left"); portSpeed *= 0.5; break;
-            case TURN_RIGHT: pl("Turn Right"); starboardSpeed *= 0.5; break;
-            default: pl("Drive Straight"); break;
+            case TURN_LEFT: pl("Turn Left"); portSpeed *= ADJ_SPEED_TO_TURN; break;
+            case TURN_RIGHT: pl("Turn Right"); starboardSpeed *= ADJ_SPEED_TO_TURN; break;
+            case STRAIGHT: pl("Drive Straight"); break;
+            case STOP:
+            default: pl("Stop"); portSpeed = starboardSpeed = 0.0;
         }//End Switch
 
         trainDrive.driveLikeATank(portSpeed, starboardSpeed);
-        //ObjMan.VerticalFork();
+//TODO:        ObjMan.VerticalFork();
     }//End driveForGoal
 
+    private void strafeToScorePosition(){
+//TODO: Strafe left or right to center ball on goal        
+    }
+    
     private void scoreTheGoal(){
-//TODO:Stop the drive motors, Fork to the top, and eject the ball
+//TODO: Fork to the top, and eject the ball
     }//End scoreTheGoal
 
     private int round(double n){
@@ -124,4 +129,5 @@ public class Autonomous implements RobotMap{
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}
     public void pl(String s, int i){System.out.println(s + i);}
+    public void pl(String s, double d){System.out.println(s + d);}
 }

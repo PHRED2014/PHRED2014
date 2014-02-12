@@ -50,7 +50,7 @@ public interface RobotMap {
     public final static int RIGHT_REAR_MOTOR = 4;
     
     public final static double BELT_SPEED = 1.0;
-    public final static double DRIVE_MOTOR_MOD = 1.0;
+    public final static double DRIVE_MOTOR_MOD = 0.75;
 
     public final static int PWMI = 8;//TODO: Used for ProtoBot.  Remove for CompBot
     public final static int PWMII = 8;
@@ -82,9 +82,12 @@ public interface RobotMap {
     public final static int WALL_LEFT = 2;
     public final static int WALL_RIGHT = 3;
     
-    public final static int STRAIGHT = 0;
-    public final static int TURN_LEFT = 1;
-    public final static int TURN_RIGHT = 2;
+    public final static int STOP = 0;
+    public final static int STRAIGHT = 1;
+    public final static int TURN_LEFT = 2;
+    public final static int TURN_RIGHT = 3;
     
+    public final static double RANGE_DIFF_LIMIT = 25.4/2; // ~1/2 inch
     public final static double AUTO_SPEED = -0.5;
+    public final static double ADJ_SPEED_TO_TURN = 0.5;
 }
