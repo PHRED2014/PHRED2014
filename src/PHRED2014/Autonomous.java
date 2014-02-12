@@ -18,8 +18,8 @@ public class Autonomous implements RobotMap{
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om, int script){
 //TODO: Add smartdashboard slider tied to these speed variables
-        portSpeed = -0.5;
-        starboardSpeed = -0.5;
+        portSpeed = AUTO_SPEED;
+        starboardSpeed = AUTO_SPEED;
         stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;

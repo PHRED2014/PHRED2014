@@ -85,4 +85,6 @@ public interface RobotMap {
     public final static int STRAIGHT = 0;
     public final static int TURN_LEFT = 1;
     public final static int TURN_RIGHT = 2;
+    
+    public final static double AUTO_SPEED = -0.5;
 }
