@@ -10,18 +10,13 @@ public class TrainDrive implements RobotMap{
     private double YJoy = 0;
     private double ZJoy = 0;
     private OI COVOP;
-//TODO:    private Servo panServo;
-//    private Servo tiltServo;
     
     //Contructor(s)
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(1,2,3,4);
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
-/* TODO:Uncomment when servos get installed         
-         panServo = new Servo(ServoI);
-         tiltServo = new Servo(ServoII);
-*/  }
+  }
     
     //Methods(functions)
     public void MechaDrive(){
@@ -41,17 +36,5 @@ public class TrainDrive implements RobotMap{
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
-    
-    
-  
-/* TODO: Uncomment when servos get installed. Needs Work.
-    public void setServo(){
-        double servoIangle = panServo.getAngle();
-        double servoIIangle = tiltServo.getAngle();
-      
-        panServo.setAngle(0.0);
-        tiltServo.setAngle(0.0);
-    }
- */
 }
 
