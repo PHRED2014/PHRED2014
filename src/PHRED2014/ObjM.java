@@ -12,7 +12,6 @@ public class ObjM implements RobotMap{
     private OI COVOP;
     
     private Victor ForkMotor;
-    private Victor ArmMotor;
     private Victor BeltMotor;
     private Encoder encoder;
     private DigitalInput LSwitchI;
@@ -27,7 +26,6 @@ public class ObjM implements RobotMap{
         COVOP = oi;
         
         ForkMotor = new Victor(PWMI);
-        ArmMotor = new Victor(PWMII);
         BeltMotor = new Victor(PWMIII);
         LSwitchI = new DigitalInput(7); //top limit
         LSwitchII = new DigitalInput(8); //bottom limit
@@ -47,12 +45,7 @@ public class ObjM implements RobotMap{
             Xval = 0.0;
         ForkMotor.set(Xval);
     }
-    
-    public void AerialArm(){ // Arm movement
-        double Xval = COVOP.getXBoxAxisValue(RStickY); // Again, we reinitialize Xval because it's specific to this method only :|
-        ArmMotor.set(Xval);    
-    }
-    
+        
     public void TankBelt(){ // Belt movement (It looks like a tank)
         double Xval = COVOP.getXBoxTrigger();
         

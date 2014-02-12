@@ -8,8 +8,7 @@
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
 
-public class PHRED2014 extends IterativeRobot implements RobotMap{
-    //Create Object References
+public class PHRED2014 extends IterativeRobot implements RobotMap{    //Create Object References
     TrainDrive trainDrive;
     ObjM ObjMan;
     OI COVOP;
@@ -48,7 +47,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     public void teleopPeriodic() {
         trainDrive.MechaDrive();
         ObjMan.TankBelt();
-        ObjMan.AerialArm();
         ObjMan.VerticalFork();
     }
     
