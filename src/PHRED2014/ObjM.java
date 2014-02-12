@@ -15,6 +15,8 @@ public class ObjM implements RobotMap{
     private Victor ArmMotor;
     private Victor BeltMotor;
     private Encoder encoder;
+    private DigitalInput LSwitchI;
+    private DigitalInput LSwitchII;
     
     //Constructor(s)
     public ObjM(OI oi){
@@ -27,6 +29,8 @@ public class ObjM implements RobotMap{
         ForkMotor = new Victor(PWMI);
         ArmMotor = new Victor(PWMII);
         BeltMotor = new Victor(PWMIII);
+        LSwitchI = new DigitalInput(7); //top limit
+        LSwitchII = new DigitalInput(8); //bottom limit
  
 /*Uncomment when encoders are added to Robot
         encoder = new Encoder(CoderI,CoderII);
@@ -37,6 +41,10 @@ public class ObjM implements RobotMap{
     //Methods
     public void VerticalFork(){ // Forklift up and down
         double Xval = COVOP.getXBoxAxisValue(LStickY); // Xval is a method specfic variable that is where we put the axis values
+        if (LSwitchI.get() && Xval < 0)
+            Xval = 0.0;
+        if (LSwitchII.get() && Xval > 0)
+            Xval = 0.0;
         ForkMotor.set(Xval);
     }
     
@@ -70,4 +78,8 @@ public class ObjM implements RobotMap{
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}
     public void pl(String s, int i){System.out.println(s + i);}
+    
+    boolean lSwitchLimitI = LSwitchI.get();
+    boolean lSwitchLimitII = LSwitchII.get();
+    
 }
