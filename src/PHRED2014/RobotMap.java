@@ -52,9 +52,9 @@ public interface RobotMap {
     public final static double BELT_SPEED = 1.0;
     public final static double DRIVE_MOTOR_MOD = 1.0;
 
-    public final static int PWMI = 10;//TODO: Used for ProtoBot.  Remove for CompBot
+    public final static int PWMI = 8;//TODO: Used for ProtoBot.  Remove for CompBot
     public final static int PWMII = 8;
-    public final static int PWMIII = 6;
+    public final static int PWMIII = 9;
 
 /* -- OI VARIABLES -- */
 // Joystick DS Ports
