@@ -16,7 +16,6 @@ public class Autonomous implements RobotMap{
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om, int script){
-//TODO: Add smartdashboard slider tied to these speed variables
         stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;
@@ -65,9 +64,6 @@ public class Autonomous implements RobotMap{
     }
     
     public void scrapeTheWall(int script){
-//TODO:        //ObjMan.deployArm(); Timer.delay(0.5);
-        //ObjMan.deployForks(); Timer.delay(0.5);
-        //ObjMan.VerticalFork(); Timer.delay(0.5);
         
 //TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
         rangeForward = 3048; //Init to ~10ft until the forward ultrasonic sensor is installed
@@ -110,7 +106,6 @@ public class Autonomous implements RobotMap{
         }//End Switch
 
         trainDrive.driveLikeATank(portSpeed, starboardSpeed);
-//TODO:        ObjMan.VerticalFork();
     }//End driveForGoal
 
     private void strafeToScorePosition(){

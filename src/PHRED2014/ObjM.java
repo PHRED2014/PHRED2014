@@ -25,8 +25,8 @@ public class ObjM implements RobotMap{
         //omMotors4 = new Relay(SpikeIV);
         COVOP = oi;
         
-        ForkMotor = new Victor(PWMI);
-        BeltMotor = new Victor(PWMIII);
+        ForkMotor = new Victor(FORK_PORT);
+        BeltMotor = new Victor(PWMIII); //Is this a victor or a relay?
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
@@ -39,10 +39,9 @@ public class ObjM implements RobotMap{
     //Methods
     public void VerticalFork(){ // Forklift up and down
         double Xval = COVOP.getXBoxAxisValue(LStickY); // Xval is a method specfic variable that is where we put the axis values
-        if (topLimit.get() && Xval < 0)
-            Xval = 0.0;
-        if (botLimit.get() && Xval > 0)
-            Xval = 0.0;
+        
+        if((topLimit.get() && Xval < 0) || (botLimit.get() && Xval > 0)){Xval = 0.0;}
+        
         ForkMotor.set(Xval);
     }
         
@@ -65,10 +64,10 @@ public class ObjM implements RobotMap{
         return encodercount;
     }
  */
-
     
     public void deployArm(){pl("Deploying the arm");}
     public void deployForks(){pl("Deploying the forks");}
+    public void moveForks(double speed, int preset){pl("Raising the forks");}
 
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}

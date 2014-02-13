@@ -22,7 +22,6 @@ public class TrainDrive implements RobotMap{
     
     //Methods(functions)
     public void MechaDrive(){
-//TODO: Add smartdashboard slider tied to the speed factor
         Speed = COVOP.SpeedJar(Speed);
         XJoy = COVOP.getJoyValue(XAxis)*Speed;
         YJoy = COVOP.getJoyValue(YAxis)*Speed;
