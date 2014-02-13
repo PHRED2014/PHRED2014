@@ -65,6 +65,12 @@ public interface RobotMap {
     public final static int XAxis = 1;
     public final static int YAxis = 2;
     public final static int ZAxis = 3;
+    public final static int ButtonVII = 7;
+    public final static int ButtonVIII = 8;
+    public final static int ButtonIX = 9;
+    public final static int ButtonX = 10;
+    public final static int ButtonXI = 11;
+    public final static int ButtonXII = 12;
     
 // Gamepad axis and buttons
     public final static int LStickX = 1;

@@ -1,6 +1,7 @@
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TrainDrive implements RobotMap{
     
@@ -10,6 +11,7 @@ public class TrainDrive implements RobotMap{
     private double YJoy = 0;
     private double ZJoy = 0;
     private OI COVOP;
+    private double Speed = DRIVE_MOTOR_MOD;
     
     //Contructor(s)
     public TrainDrive(OI oi){
@@ -21,11 +23,15 @@ public class TrainDrive implements RobotMap{
     //Methods(functions)
     public void MechaDrive(){
 //TODO: Add smartdashboard slider tied to the speed factor
-        XJoy = COVOP.getJoyValue(XAxis)*DRIVE_MOTOR_MOD;
-        YJoy = COVOP.getJoyValue(YAxis)*DRIVE_MOTOR_MOD;
-        ZJoy = COVOP.getJoyValue(ZAxis)*DRIVE_MOTOR_MOD;
+        Speed = COVOP.SpeedJar(Speed);
+        XJoy = COVOP.getJoyValue(XAxis)*Speed;
+        YJoy = COVOP.getJoyValue(YAxis)*Speed;
+        ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
         
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
+        
+        SmartDashboard.putNumber("ORCA Effeciency", Speed);
+        
     }
     
     public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous
