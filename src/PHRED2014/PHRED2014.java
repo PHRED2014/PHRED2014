@@ -10,17 +10,17 @@ import edu.wpi.first.wpilibj.*;
 
 public class PHRED2014 extends IterativeRobot implements RobotMap{    
     //Create Object References
-    TrainDrive trainDrive;
-    ObjM ObjMan;
-    OI COVOP;
-    Autonomous auto;
+    TrainDrive trainDrive = null;
+    ObjM ObjMan = null;
+    OI COVOP = null;
+    Autonomous auto = null;
     
     // This method is run when the robot is first started    
     public void robotInit() {
         //Instantiate the hardware objects
         COVOP = new OI();
         trainDrive = new TrainDrive(COVOP);
-        ObjMan = new ObjM(COVOP);
+    //    ObjMan = new ObjM(COVOP);
     }
 
     // This method is called once prior to autonomous
@@ -47,8 +47,8 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called periodically during operator control
     public void teleopPeriodic() {
         trainDrive.MechaDrive();
-        ObjMan.TankBelt();
-        ObjMan.VerticalFork();
+        //ObjMan.TankBelt();
+        //ObjMan.VerticalFork();
     }
     
     // This function is called periodically during test mode
