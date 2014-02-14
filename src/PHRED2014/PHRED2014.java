@@ -22,7 +22,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         //Instantiate the hardware objects
         COVOP = new OI();
         trainDrive = new TrainDrive(COVOP);
-    //    ObjMan = new ObjM(COVOP);
+        ObjMan = new ObjM(COVOP);
     }
 
     // This method is called once prior to autonomous
