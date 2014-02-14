@@ -14,7 +14,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     ObjM ObjMan;
     OI COVOP;
     Autonomous auto;
-    boolean robotPrepDone = false;
+    boolean robotPrepped = false;
     
     // This method is run when the robot is first started    
     public void robotInit() {
@@ -32,8 +32,8 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-        if(!robotPrepDone){robotPrepDone = prepTheRobot();}
-        else{ObjMan.moveForks(-1.0, 0);}
+        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
+        else{ObjMan.moveForks(-1.0, NO_PRESET);}
 
         switch(COVOP.getAutoID()){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
@@ -45,12 +45,12 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     //This method is called once prior to teleop
     public void teleopInit(){
-        if(!robotPrepDone){robotPrepDone = prepTheRobot();}
         trainDrive.InvertMecha();
     }
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
+        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
         trainDrive.MechaDrive();
         ObjMan.TankBelt();
         ObjMan.VerticalFork();
@@ -60,14 +60,4 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     public void testPeriodic() {
     
     }
-    
-    //Prepare the robot for autonomous
-    private boolean prepTheRobot(){
-        ObjMan.deployArm(); Timer.delay(0.5);
-        ObjMan.deployForks(); Timer.delay(0.5);
-        ObjMan.moveForks(-1.0, 0); Timer.delay(0.5);
-        return true;
-    }
-
-
 }

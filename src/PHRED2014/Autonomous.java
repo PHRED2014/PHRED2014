@@ -113,7 +113,7 @@ public class Autonomous implements RobotMap{
     }
     
     private void scoreTheGoal(){
-//TODO: Fork to the top, and eject the ball
+//TODO: Fork to position, and eject the ball
     }//End scoreTheGoal
 
     private int round(double n){

@@ -73,9 +73,10 @@ public class OI implements RobotMap{
     public int getAutoID(){
         for(int i=1; i<9; i++)
             if(driverStation.getDigitalIn(i)){return i;}
-        
         return 0;
     }
+    
+
     
     public void SetSpeedJar(double a){
         

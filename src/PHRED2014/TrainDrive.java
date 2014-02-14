@@ -15,7 +15,8 @@ public class TrainDrive implements RobotMap{
     
     //Contructor(s)
     public TrainDrive(OI oi){
-         driveMotors = new RobotDrive(LEFT_FRONT_MOTOR, LEFT_REAR_MOTOR, RIGHT_FRONT_MOTOR, RIGHT_REAR_MOTOR);
+         driveMotors = new RobotDrive(LEFT_FRONT_MOTOR, LEFT_REAR_MOTOR, 
+                                      RIGHT_FRONT_MOTOR, RIGHT_REAR_MOTOR);
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
   }
