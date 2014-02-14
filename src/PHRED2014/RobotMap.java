@@ -9,7 +9,6 @@ public interface RobotMap {
 /* -- SIDECAR PORT MAPPINGS -- */
     
 //Analog
-    public final static int GyroI = 1;
     
 //Digital
     public final static int LEFT_FRONT_ULTRA_P = 1; //Ultrasonic Sensors
@@ -94,8 +93,9 @@ public interface RobotMap {
     public final static int TURN_RIGHT = 3;
     
     public final static double RANGE_DIFF_LIMIT = 25.4/2; // ~1/2 inch
-    public final static double AUTO_SPEED = -0.5;
-    public final static double ADJ_SPEED_TO_TURN = 0.5;
+    public final static int DRIVE_SPEED_IDX = 1;
+    public final static int TURN_SPEED_IDX = 2;
+    public final static int RANGE_TOLERANCE_IDX = 3;
     
     public final static int NO_PRESET = -1;
 }

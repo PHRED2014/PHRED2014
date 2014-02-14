@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.*;
 public class ObjM implements RobotMap{
     
     //Instance variables: Motors, Sensors, etc
-    //private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
+    //TODO: private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
     //private Relay omMotors2;
     //private Relay omMotors3;
     //private Relay omMotors4;
@@ -19,7 +19,7 @@ public class ObjM implements RobotMap{
     
     //Constructor(s)
     public ObjM(OI oi){
-        //omMotors1 = new Relay(SpikeI);
+        //TODO: omMotors1 = new Relay(SpikeI);
         //omMotors2 = new Relay(SpikeII);
         //omMotors3 = new Relay(SpikeIII);
         //omMotors4 = new Relay(SpikeIV);
@@ -27,10 +27,10 @@ public class ObjM implements RobotMap{
         
         ForkMotor = new Victor(FORK_PORT);
         BeltMotor = new Victor(PWMIII); //Is this a victor or a relay?
-        topLimit = new DigitalInput(TOP_LIMIT); //top limit
-        botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
+//TODO:        //topLimit = new DigitalInput(TOP_LIMIT); //top limit
+        //botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
-/*Uncomment when encoders are added to Robot
+/*TODO: Uncomment when encoders are added to Robot
         encoder = new Encoder(CoderI,CoderII);
         encoder.reset();
         encoder.start();
@@ -74,7 +74,7 @@ public class ObjM implements RobotMap{
     public void moveForks(double speed, int preset){
         pl("Moving the forks");
         
-    //    if((topLimit.get() && speed < 0) || (botLimit.get() && speed > 0)){speed = 0.0;}
+    //TODO:    if((topLimit.get() && speed < 0) || (botLimit.get() && speed > 0)){speed = 0.0;}
     
     //Check to see if we are at either the upper or lower limit (limit switches). Yes: set speed = 0 as appropriate
     //Check to see if we are moving under a preset command and if so if at that preset Yes: speed = 0 and clear the preset condition

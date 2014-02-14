@@ -31,7 +31,6 @@ public class TrainDrive implements RobotMap{
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
         
         SmartDashboard.putNumber("ORCA Effeciency", Speed);
-        
     }
     
     public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous

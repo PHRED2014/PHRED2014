@@ -7,6 +7,7 @@ public class Autonomous implements RobotMap{
     //Instance variables
     private final TrainDrive trainDrive;
     private final ObjM ObjMan;
+    private final OI COVOP;
     
     private Ultrasonic usFore = null;
     private Ultrasonic usAft = null;
@@ -15,16 +16,17 @@ public class Autonomous implements RobotMap{
     private int rangeFore, rangeAft, rangeForward, rangeDiff, stopRange;
 
     //Contstructor(s)
-    public Autonomous(TrainDrive td, ObjM om, int script){
+    public Autonomous(TrainDrive td, ObjM om, OI oi){
         stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;
+        COVOP = oi;
         
 //TODO:        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
 //        usForward.setAutomaticMode(false);
 //        usForward.setEnabled(true);
 
-        switch(script){
+        switch(COVOP.getAutoID()){
             case WALL_LEFT:{
                 usFore = new Ultrasonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
                 usFore.setAutomaticMode(false);
@@ -58,9 +60,8 @@ public class Autonomous implements RobotMap{
         rangeForward = 6100; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
-        if(rangeForward > stopRange)
-            trainDrive.driveLikeATank(AUTO_SPEED, AUTO_SPEED);
-        else trainDrive.driveLikeATank(0.0, 0.0);
+        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
+        else{driveForGoal(STOP);}
     }
     
     public void scrapeTheWall(int script){
@@ -79,7 +80,7 @@ public class Autonomous implements RobotMap{
             rangeDiff = rangeFore - rangeAft;
             pl("Range DIFF: ", rangeDiff);
             
-            if(Math.abs(rangeDiff) > RANGE_DIFF_LIMIT){
+            if(COVOP.getAutoSpeedSettings(RANGE_TOLERANCE_IDX) <= Math.abs(rangeDiff)){
                 if(rangeDiff > 0){
                     if(script == WALL_LEFT){driveForGoal(TURN_LEFT);}
                     else{driveForGoal(TURN_RIGHT);}
@@ -94,18 +95,20 @@ public class Autonomous implements RobotMap{
     }//End while
 
     private void driveForGoal(int direction){
-        double portSpeed = AUTO_SPEED;
-        double starboardSpeed = AUTO_SPEED;
+        double lSpeed, rSpeed;
+        lSpeed = rSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
+//        double autoSpeedSettings[] = COVOP.getAutoSpeedSettings();
+//        lSpeed = rSpeed = autoSpeedSettings[DRIVE_SPEED_IDX];
         
         switch (direction){
-            case TURN_LEFT: pl("Turn Left"); portSpeed *= ADJ_SPEED_TO_TURN; break;
-            case TURN_RIGHT: pl("Turn Right"); starboardSpeed *= ADJ_SPEED_TO_TURN; break;
+            case TURN_LEFT: pl("Turn Left"); lSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
+            case TURN_RIGHT: pl("Turn Right"); rSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
             case STRAIGHT: pl("Drive Straight"); break;
             case STOP:
-            default: pl("Stop"); portSpeed = starboardSpeed = 0.0;
+            default: pl("Stop"); lSpeed = rSpeed = 0.0;
         }//End Switch
 
-        trainDrive.driveLikeATank(portSpeed, starboardSpeed);
+        trainDrive.driveLikeATank(lSpeed, rSpeed);
     }//End driveForGoal
 
     private void strafeToScorePosition(){

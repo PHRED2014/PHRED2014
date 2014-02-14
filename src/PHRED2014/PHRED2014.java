@@ -14,8 +14,9 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     ObjM ObjMan;
     OI COVOP;
     Autonomous auto;
+
     boolean robotPrepped = false;
-    
+
     // This method is run when the robot is first started    
     public void robotInit() {
         //Instantiate the hardware objects
@@ -27,7 +28,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called once prior to autonomous
     public void autonomousInit(){
         //Instantiate the autonomous object
-        auto = new Autonomous(trainDrive, ObjMan, COVOP.getAutoID());
+        auto = new Autonomous(trainDrive, ObjMan, COVOP);
     }
 
     // This method is called periodically during autonomous
