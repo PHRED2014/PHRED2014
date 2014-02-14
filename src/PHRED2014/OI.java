@@ -80,4 +80,18 @@ public class OI implements RobotMap{
         
         return 0;
     }
+    
+    public double getAutoSpeedSettings(int i){
+        switch (i){
+            case DRIVE_SPEED_IDX: 
+                return driverStation.getAnalogIn(DRIVE_SPEED_IDX)/5;
+            case TURN_SPEED_IDX:
+                return driverStation.getAnalogIn(TURN_SPEED_IDX)/5;
+            case RANGE_TOLERANCE_IDX:
+                return driverStation.getAnalogIn(RANGE_TOLERANCE_IDX)*10;
+            default:
+        }
+        return (int)driverStation.getAnalogIn(i);
+    }
+
 }

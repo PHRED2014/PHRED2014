@@ -75,4 +75,8 @@ public interface RobotMap {
     public final static double RANGE_DIFF_LIMIT = 25.4/2; // ~1/2 inch
     public final static double AUTO_SPEED = -0.5;
     public final static double ADJ_SPEED_TO_TURN = 0.5;
+    
+    public final static int DRIVE_SPEED_IDX = 1;
+    public final static int TURN_SPEED_IDX = 2;
+    public final static int RANGE_TOLERANCE_IDX = 3;
 }
