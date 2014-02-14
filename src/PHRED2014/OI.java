@@ -1,12 +1,20 @@
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.buttons.*;
 
 public class OI implements RobotMap{
     
     private DriverStation driverStation;
     private Joystick MechStick;
     private Joystick XStick;
+    private Button SpeedI = new JoystickButton(MechStick, ButtonVII),
+            SpeedII = new JoystickButton(MechStick, ButtonVIII),
+            SpeedIII = new JoystickButton(MechStick, ButtonIX),
+            SpeedIV = new JoystickButton(MechStick, ButtonX),
+            SpeedV = new JoystickButton(MechStick, ButtonXI),
+            SpeedVI = new JoystickButton(MechStick, ButtonXII);        
+            
     
     public OI(){
         driverStation = DriverStation.getInstance();
@@ -42,23 +50,11 @@ public class OI implements RobotMap{
     public double getXBoxAxisValue(int axis){
         switch(axis){
             case 1:
-                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
-                    return 0;
-                }else{
-                    return XStick.getRawAxis(axis);
-                }
+                
             case 2:
-                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
-                    return 0;
-                }else{
-                    return XStick.getRawAxis(axis);
-                }
+               
             case 4:
-                if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
-                    return 0;
-                }else{
-                    return XStick.getRawAxis(axis);
-                }
+                
             case 5:
                 if(Math.abs(XStick.getRawAxis(axis)) < DeadZone){
                     return 0;
@@ -77,7 +73,6 @@ public class OI implements RobotMap{
     public int getAutoID(){
         for(int i=1; i<9; i++)
             if(driverStation.getDigitalIn(i)){return i;}
-        
         return 0;
     }
     
@@ -93,5 +88,38 @@ public class OI implements RobotMap{
         }
         return (int)driverStation.getAnalogIn(i);
     }
-
+    
+    public void SetSpeedJar(double a){
+        
+    }
+    
+    public double SpeedJar(double num){
+        boolean a = MechStick.getRawButton(ButtonVII);
+        boolean b = MechStick.getRawButton(ButtonVIII);
+        boolean c = MechStick.getRawButton(ButtonIX);
+        boolean d = MechStick.getRawButton(ButtonX);
+        boolean e = MechStick.getRawButton(ButtonXI);
+        boolean f = MechStick.getRawButton(ButtonXII);
+        
+        if(a){
+            return 0.5;
+        }
+        if(b){
+            return 0.6;
+        }
+        if(c){
+            return 0.7;
+        }
+        if(d){
+            return 0.8;
+        }
+        if(e){
+            return 0.9;
+        }
+        if(f){
+            return 1.0;
+        }
+        
+        return num;
+    }
 }

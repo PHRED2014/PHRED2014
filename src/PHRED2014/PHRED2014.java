@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj.*;
 
 public class PHRED2014 extends IterativeRobot implements RobotMap{    
     //Create Object References
-    TrainDrive trainDrive = null;
-    ObjM ObjMan = null;
-    OI COVOP = null;
-    Autonomous auto = null;
-    
+    TrainDrive trainDrive;
+    ObjM ObjMan;
+    OI COVOP;
+    Autonomous auto;
+
+    boolean robotPrepped = false;
+
     // This method is run when the robot is first started    
     public void robotInit() {
         //Instantiate the hardware objects
@@ -26,11 +28,14 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called once prior to autonomous
     public void autonomousInit(){
         //Instantiate the autonomous object
-        auto = new Autonomous(trainDrive, ObjMan, COVOP.getAutoID());
+        auto = new Autonomous(trainDrive, ObjMan, COVOP);
     }
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
+        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
+        else{ObjMan.moveForks(-1.0, NO_PRESET);}
+
         switch(COVOP.getAutoID()){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
             case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
@@ -46,6 +51,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
+        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
         trainDrive.MechaDrive();
         //ObjMan.TankBelt();
         //ObjMan.VerticalFork();

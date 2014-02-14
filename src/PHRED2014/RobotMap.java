@@ -9,7 +9,6 @@ public interface RobotMap {
 /* -- SIDECAR PORT MAPPINGS -- */
     
 //Analog
-    public final static int GyroI = 1;
     
 //Digital
     public final static int LEFT_FRONT_ULTRA_P = 1; //Ultrasonic Sensors
@@ -35,7 +34,7 @@ public interface RobotMap {
     public final static int RIGHT_REAR_MOTOR = 4;
     
     public final static double BELT_SPEED = 1.0;
-    public final static double DRIVE_MOTOR_MOD = 0.75;
+    public final static double DRIVE_MOTOR_MOD = 1.0;
 
     public final static int Forkport = 10;//TODO: Used for ProtoBot.  Remove for CompBot
     public final static int Armport = 9;
@@ -50,6 +49,12 @@ public interface RobotMap {
     public final static int XAxis = 1;
     public final static int YAxis = 2;
     public final static int ZAxis = 3;
+    public final static int ButtonVII = 7;
+    public final static int ButtonVIII = 8;
+    public final static int ButtonIX = 9;
+    public final static int ButtonX = 10;
+    public final static int ButtonXI = 11;
+    public final static int ButtonXII = 12;
     
 // Gamepad axis and buttons
     public final static int LStickX = 1;
@@ -73,10 +78,9 @@ public interface RobotMap {
     public final static int TURN_RIGHT = 3;
     
     public final static double RANGE_DIFF_LIMIT = 25.4/2; // ~1/2 inch
-    public final static double AUTO_SPEED = -0.5;
-    public final static double ADJ_SPEED_TO_TURN = 0.5;
-    
     public final static int DRIVE_SPEED_IDX = 1;
     public final static int TURN_SPEED_IDX = 2;
     public final static int RANGE_TOLERANCE_IDX = 3;
+    
+    public final static int NO_PRESET = -1;
 }
