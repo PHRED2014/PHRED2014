@@ -15,15 +15,13 @@ public class ObjM implements RobotMap{
     //Constructor(s)
     public ObjM(OI oi){
         COVOP = oi;
-        
-        ForkMotor = new Victor(Forkport);
-        ArmMotor = new Victor(Armport);
-        BeltMotor = new Victor(Beltport);
-
+//TODO:        ForkMotor = new Victor(Forkport);
+//        ArmMotor = new Victor(Armport);
+//        BeltMotor = new Victor(Beltport);
     }
     
     //Methods
-    public void VerticalFork(){ // Forklift up and down
+/*    public void VerticalFork(){ // Forklift up and down
         moveForks(COVOP.getXBoxAxisValue(LStickY), NO_PRESET);
     }
         
@@ -39,13 +37,13 @@ public class ObjM implements RobotMap{
             BeltMotor.set(0.0);
         }
     }
-
+*/
 
     //Prepare the robot for competition
     public boolean prepTheRobot(){
         deployArm(); Timer.delay(0.5);
         deployForks(); Timer.delay(0.5);
-        moveForks(-1.0, 100); Timer.delay(0.5);//preset ???
+//TODO:        moveForks(-1.0, 100); Timer.delay(0.5);//preset ???
         return true;
     }
 

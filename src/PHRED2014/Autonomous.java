@@ -11,7 +11,7 @@ public class Autonomous implements RobotMap{
     
     private Ultrasonic usFore = null;
     private Ultrasonic usAft = null;
-//TODO:    private Ultrasonic usForward = null;
+    private Ultrasonic usForward = null;
 
     private int rangeFore, rangeAft, rangeForward, rangeDiff, stopRange;
 
@@ -22,9 +22,9 @@ public class Autonomous implements RobotMap{
         ObjMan = om;
         COVOP = oi;
         
-//TODO:        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-//        usForward.setAutomaticMode(false);
-//        usForward.setEnabled(true);
+        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        usForward.setAutomaticMode(false);
+        usForward.setEnabled(true);
 
         switch(COVOP.getAutoID()){
             case WALL_LEFT:{
@@ -56,7 +56,7 @@ public class Autonomous implements RobotMap{
     
     //Methods
     public void driveForward(){
-//TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        while((rangeForward = round(usForward.getRangeMM())) == 0){}
         rangeForward = 6100; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
@@ -65,8 +65,7 @@ public class Autonomous implements RobotMap{
     }
     
     public void scrapeTheWall(int script){
-        
-//TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        while((rangeForward = round(usForward.getRangeMM())) == 0){}
         rangeForward = 3048; //Init to ~10ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
@@ -97,8 +96,6 @@ public class Autonomous implements RobotMap{
     private void driveForGoal(int direction){
         double lSpeed, rSpeed;
         lSpeed = rSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
-//        double autoSpeedSettings[] = COVOP.getAutoSpeedSettings();
-//        lSpeed = rSpeed = autoSpeedSettings[DRIVE_SPEED_IDX];
         
         switch (direction){
             case TURN_LEFT: pl("Turn Left"); lSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
