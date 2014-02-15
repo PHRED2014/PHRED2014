@@ -37,10 +37,6 @@ public class Autonomous implements RobotMap{
         stuff and throwing out the fluff: RR, threading, etc.
  *
  */
-        
-        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-        usForward.setAutomaticMode(false);
-        usForward.setEnabled(true);
 
         switch(COVOP.getAutoID()){
             case WALL_LEFT:{
@@ -49,7 +45,7 @@ public class Autonomous implements RobotMap{
                 usFore.setEnabled(true);
  
                 usAft = new Ultrasonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
-                usAft.setAutomaticMode(true);
+                usAft.setAutomaticMode(false);
                 usAft.setEnabled(true);
                 break;
             }
@@ -59,7 +55,7 @@ public class Autonomous implements RobotMap{
                 usFore.setEnabled(true);
  
                 usAft = new Ultrasonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
-                usAft.setAutomaticMode(true);
+                usAft.setAutomaticMode(false);
                 usAft.setEnabled(true);
                 break;
             }
@@ -67,8 +63,12 @@ public class Autonomous implements RobotMap{
             default:
                 stopRange = 3000;// ~10 feet
                 break;
-        }
-    }
+        }//End switch
+        
+        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        usForward.setAutomaticMode(true);
+        usForward.setEnabled(true);
+    }//End Constructor
     
     //Methods
     public void driveForward(){
@@ -111,7 +111,7 @@ public class Autonomous implements RobotMap{
 
     private void driveForGoal(int direction){
         double lSpeed, rSpeed;
-        lSpeed = rSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
+        lSpeed = rSpeed = -COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
         
         switch (direction){
             case TURN_LEFT: pl("Turn Left"); lSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
