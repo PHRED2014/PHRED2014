@@ -7,6 +7,9 @@
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.Random; // --! THIS IS FOR THE TEST FUNCTION. NOT ACTUAL ROBOT. IF NEEDED IS OKAY TO DELETE !--
 
 public class PHRED2014 extends IterativeRobot implements RobotMap{    
     //Create Object References
@@ -14,6 +17,9 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     ObjM ObjMan;
     OI COVOP;
     Autonomous auto;
+    
+    Random r = new Random(); // !-- THIS IS FOR TEST FUNCTION --! 
+    int graph = 5; // !-- SO IS THIS --!
 
     boolean robotPrepped = false;
 
@@ -59,6 +65,27 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     
     // This function is called periodically during test mode
     public void testPeriodic() {
-    
+         if(COVOP.getXBoxButton(XA)){
+             ObjMan.deployForks();
+         }
+         
+         if(COVOP.getXBoxButton(XY)){
+             ObjMan.deployArm();
+         }
+         
+         ObjMan.TankBelt(Trigger);
+         
+         trainDrive.MechaDrive();
+         trainDrive.BoxDrive();
+         
+         ObjMan.XFork(BumperL, BumperR);
+         
+         SmartDashboard.putString("TEST MODE", "ACTIVATED");
+         
+         
+         graph += (r.nextInt(3) - 1);
+         SmartDashboard.putInt("TEST OUTPUT", graph); // Hopefully this will be a cool graph
+         
+         
     }
 }

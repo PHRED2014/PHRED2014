@@ -39,14 +39,14 @@ public class ObjM implements RobotMap{
         moveForks(COVOP.getXBoxAxisValue(LStickY), NO_PRESET);
     }
         
-    public void TankBelt(){ // Belt movement (It looks like a tank)
-        if(COVOP.getXBoxAxisValue(RStickY) > DeadZone){
+    public void TankBelt(int axis){ // Belt movement (It looks like a tank)
+        if(COVOP.getXBoxAxisValue(axis) > DeadZone){
             BeltMotor.setDirection(Relay.Direction.kForward);    
         }
-        if(COVOP.getXBoxAxisValue(RStickY) < -DeadZone){
+        if(COVOP.getXBoxAxisValue(axis) < -DeadZone){
             BeltMotor.setDirection(Relay.Direction.kReverse);
         }
-        if(COVOP.getXBoxAxisValue(RStickY) < DeadZone && COVOP.getXBoxAxisValue(RStickY) > -DeadZone){
+        if(COVOP.getXBoxAxisValue(axis) < DeadZone && COVOP.getXBoxAxisValue(axis) > -DeadZone){
             BeltMotor.set(Relay.Value.kOff);
         }
     }
@@ -95,6 +95,20 @@ public class ObjM implements RobotMap{
         ForkMotor.set(speed);
         pl("Moving the forks");
         SmartDashboard.putString("Fork Status: ", "Moving the Forks");
+    }
+    
+    public void XFork(int up, int down){ //This is for the test function.
+        if(COVOP.getXBoxButton(up) && !COVOP.getXBoxButton(down)){
+            moveForks(1, NO_PRESET);
+        }
+        
+        if(COVOP.getXBoxButton(down) && !COVOP.getXBoxButton(up)){
+            moveForks(-1, NO_PRESET);
+        }
+        
+        if((!COVOP.getXBoxButton(down) && !COVOP.getXBoxButton(up)) || (COVOP.getXBoxButton(down) && COVOP.getXBoxButton(up))){
+            moveForks(0, NO_PRESET);
+        }
     }
     
     //I'm tired of typing System.out.println You could just use smartDashboard :|

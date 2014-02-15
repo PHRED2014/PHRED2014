@@ -41,5 +41,14 @@ public class TrainDrive implements RobotMap{
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
     }
+    
+    public void BoxDrive(){
+        Speed = COVOP.SpeedJar(Speed);
+        XJoy = COVOP.getXBoxAxisValue(LStickX)*Speed;
+        YJoy = COVOP.getXBoxAxisValue(LStickY)*Speed;
+        ZJoy = COVOP.getXBoxAxisValue(RStickX)*Speed;
+        
+        driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
+    }
 }
 
