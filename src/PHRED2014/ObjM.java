@@ -5,10 +5,6 @@ import edu.wpi.first.wpilibj.*;
 public class ObjM implements RobotMap{
     
     //Instance variables: Motors, Sensors, etc
-    //TODO: private Relay omMotors1; //Could be a Victor, or a spike. Same with the other victors below.
-    //private Relay omMotors2;
-    //private Relay omMotors3;
-    //private Relay omMotors4;
     private OI COVOP;
     
     private Victor ForkMotor;
@@ -22,10 +18,6 @@ public class ObjM implements RobotMap{
     
     //Constructor(s)
     public ObjM(OI oi){
-        //TODO: omMotors1 = new Relay(SpikeI);
-        //omMotors2 = new Relay(SpikeII);
-        //omMotors3 = new Relay(SpikeIII);
-        //omMotors4 = new Relay(SpikeIV);
         COVOP = oi;
         
         ForkMotor = new Victor(FORK_PORT);
@@ -42,7 +34,7 @@ public class ObjM implements RobotMap{
     }
     
     //Methods
-    public void VerticalFork(){ // Forklift up and down
+/*    public void VerticalFork(){ // Forklift up and down
         moveForks(COVOP.getXBoxAxisValue(LStickY), NO_PRESET);
     }
         
@@ -77,7 +69,7 @@ public class ObjM implements RobotMap{
     public boolean prepTheRobot(){
         deployArm(); Timer.delay(0.5);
         deployForks(); Timer.delay(0.5);
-        moveForks(-1.0, 100); Timer.delay(0.5);//preset ???
+//TODO:        moveForks(-1.0, 100); Timer.delay(0.5);//preset ???
         return true;
     }
 
