@@ -25,37 +25,30 @@ public interface RobotMap {
 
     public final static int FRONT_ULTRA_P = 9;
     public final static int FRONT_ULTRA_E = 10;
-
-    public final static int TOP_LIMIT = 11; //Fork limit switches
+    
+    public final static int TOP_LIMIT = 11;//Need to verify these settings
     public final static int BOT_LIMIT = 12;
     
-    public final static int CoderI = 13; //Fork Encoder
-    public final static int CoderII = 14;
+    public final static int CODERI = 13;//Need to verify these settings
+    public final static int CODERII = 14;
 
 //Relays
-    public final static int SpikeI = 1; //Spikes for Victors and Relays?
-    public final static int SpikeII = 2;
-    public final static int SpikeIII = 3;
-    public final static int SpikeIV = 4;
-    
-    public final static int SolI = 1; //Soleniods
-    public final static int SolII = 2;
-    public final static int SolIII = 3;
+    public final static int SPIKEI = 1; //Need to verify these settings
+    public final static int SPIKEII = 2;
+    public final static int SPIKEIII = 3;
     
 //PWM
     public final static int LEFT_FRONT_MOTOR = 1; //Train drive motors
     public final static int LEFT_REAR_MOTOR = 2;
     public final static int RIGHT_FRONT_MOTOR = 3;
     public final static int RIGHT_REAR_MOTOR = 4;
+    public final static int FORK_PORT = 5; //Need to verify this setting
     
     public final static double BELT_SPEED = 1.0;
     public final static double DRIVE_MOTOR_MOD = 1.0;
 
-    public final static int FORK_PORT = 8;//TODO: Used for ProtoBot.  Remove for CompBot
-    public final static int PWMII = 8;
-    public final static int PWMIII = 9;
 
-/* -- OI VARIABLES -- */
+/* -- OI VARIABLES/CONSTANTS -- */
 // Joystick DS Ports
     public final static int Xstreme3D = 3;
     public final static int GamePad = 4;
@@ -88,7 +81,6 @@ public interface RobotMap {
     public final static int Start = 8;
     public final static int JoyPressL = 9;
     public final static int JoyPressR = 10;
-
     
     public final static double DeadZone = 0.05;
     
@@ -107,6 +99,7 @@ public interface RobotMap {
     public final static int DRIVE_SPEED_IDX = 1;
     public final static int TURN_SPEED_IDX = 2;
     public final static int RANGE_TOLERANCE_IDX = 3;
+    public final static int SCORE_RANGE_IDX = 4;
     
     public final static int NO_PRESET = -1;
 }

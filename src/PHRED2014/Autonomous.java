@@ -11,20 +11,36 @@ public class Autonomous implements RobotMap{
     
     private Ultrasonic usFore = null;
     private Ultrasonic usAft = null;
-//TODO:    private Ultrasonic usForward = null;
+    private Ultrasonic usForward = null;
 
     private int rangeFore, rangeAft, rangeForward, rangeDiff, stopRange;
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om, OI oi){
-        stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;
         COVOP = oi;
+
+        stopRange = round(COVOP.getAutoSpeedSettings(SCORE_RANGE_IDX));
+
+/*
+ *Things to try:
         
-//TODO:        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-//        usForward.setAutomaticMode(false);
-//        usForward.setEnabled(true);
+        1)Move the Forward US to being the last sensor created. The RR feature
+        of Ultrasonic uses a FILO approach to chaining the sensors.  Therefore
+        the last sensor created is considered to be the first in the ping array.
+        
+        2)Handle the ping/echo manually.  Still use the Ultrasonic class but
+        turn off the RR feature.
+        
+        3)Go fully manual.  Clone the Ultrasonic class, keeping the important
+        stuff and throwing out the fluff: RR, threading, etc.
+ *
+ */
+        
+        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        usForward.setAutomaticMode(false);
+        usForward.setEnabled(true);
 
         switch(COVOP.getAutoID()){
             case WALL_LEFT:{
@@ -49,15 +65,15 @@ public class Autonomous implements RobotMap{
             }
             case CENTER:
             default:
-                stopRange = 3048;// ~10 feet
+                stopRange = 3000;// ~10 feet
                 break;
         }
     }
     
     //Methods
     public void driveForward(){
-//TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        rangeForward = 6100; //Init to ~20ft until the forward ultrasonic sensor is installed
+        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        //rangeForward = 6000; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
@@ -65,9 +81,8 @@ public class Autonomous implements RobotMap{
     }
     
     public void scrapeTheWall(int script){
-        
-//TODO:        while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        rangeForward = 3048; //Init to ~10ft until the forward ultrasonic sensor is installed
+        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        //rangeForward = 3000; //Init to ~10ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){
@@ -97,8 +112,6 @@ public class Autonomous implements RobotMap{
     private void driveForGoal(int direction){
         double lSpeed, rSpeed;
         lSpeed = rSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
-//        double autoSpeedSettings[] = COVOP.getAutoSpeedSettings();
-//        lSpeed = rSpeed = autoSpeedSettings[DRIVE_SPEED_IDX];
         
         switch (direction){
             case TURN_LEFT: pl("Turn Left"); lSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;

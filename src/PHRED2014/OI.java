@@ -85,9 +85,11 @@ public class OI implements RobotMap{
                 return driverStation.getAnalogIn(TURN_SPEED_IDX)/5;
             case RANGE_TOLERANCE_IDX:
                 return driverStation.getAnalogIn(RANGE_TOLERANCE_IDX)*10;
+            case SCORE_RANGE_IDX:
+                return driverStation.getAnalogIn(SCORE_RANGE_IDX)*600;
             default:
         }
-        return (int)driverStation.getAnalogIn(i);
+        return driverStation.getAnalogIn(i);
     }
     
     public void SetSpeedJar(double a){

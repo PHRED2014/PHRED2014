@@ -29,14 +29,14 @@ public class ObjM implements RobotMap{
         COVOP = oi;
         
         ForkMotor = new Victor(FORK_PORT);
-        BeltMotor = new Relay(PWMIII); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
-        ArmDeploy = new Relay(SpikeI);//it controls the one-time deployment solenoid of the Belt. Dunno the port
-        ForkDeploy = new Relay(SpikeII);//it controls the one-time deployment solenoid of the Forks. Dunno the port
+        BeltMotor = new Relay(SPIKEIII); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
+        ArmDeploy = new Relay(SPIKEI);//it controls the one-time deployment solenoid of the Belt. Dunno the port
+        ForkDeploy = new Relay(SPIKEII);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
         
-        encoder = new Encoder(CoderI,CoderII);
+        encoder = new Encoder(CODERI,CODERII);
         encoder.reset();
         encoder.start();
     }
@@ -82,14 +82,14 @@ public class ObjM implements RobotMap{
     }
 
     public void deployArm(){pl("Deploying the arm");
-    ArmDeploy.set(Relay.Value.kOn);
-    Timer.delay(.05);
-    ArmDeploy.set(Relay.Value.kOff);
+        ArmDeploy.set(Relay.Value.kOn);
+        Timer.delay(.05);
+        ArmDeploy.set(Relay.Value.kOff);
     }
     public void deployForks(){pl("Deploying the forks");
-    ForkDeploy.set(Relay.Value.kOn);
-    Timer.delay(.05);
-    ForkDeploy.set(Relay.Value.kOff);
+        ForkDeploy.set(Relay.Value.kOn);
+        Timer.delay(.05);
+        ForkDeploy.set(Relay.Value.kOff);
     }
     public void moveForks(double speed, int preset){
        
