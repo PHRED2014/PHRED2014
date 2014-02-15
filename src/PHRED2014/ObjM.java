@@ -17,6 +17,7 @@ public class ObjM implements RobotMap{
     private DigitalInput topLimit;
     private DigitalInput botLimit;
     
+    
     //Constructor(s)
     public ObjM(OI oi){
         //TODO: omMotors1 = new Relay(SpikeI);
@@ -27,14 +28,14 @@ public class ObjM implements RobotMap{
         
         ForkMotor = new Victor(FORK_PORT);
         BeltMotor = new Victor(PWMIII); //Is this a victor or a relay?
-//TODO:        //topLimit = new DigitalInput(TOP_LIMIT); //top limit
-        //botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
+        topLimit = new DigitalInput(TOP_LIMIT); //top limit
+        botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
-/*TODO: Uncomment when encoders are added to Robot
+        
         encoder = new Encoder(CoderI,CoderII);
         encoder.reset();
         encoder.start();
-*/    }
+    }
     
     //Methods
     public void VerticalFork(){ // Forklift up and down
@@ -54,6 +55,9 @@ public class ObjM implements RobotMap{
         }
     }
 
+   /* public boolean getXBoxButton(int button){
+        return COVOP.XStick.getButton(button);
+    }       */
 /*TODO: Uncomment when encoders are added to the robot. Needs work: Probably belongs in VerticleFork().
     public int Carriage(){
         int encodercount = encoder.get();
@@ -62,6 +66,11 @@ public class ObjM implements RobotMap{
  */
 
     //Prepare the robot for competition
+    public int GetEncoder(){
+        int encodercount = encoder.get();
+        return encodercount;
+    }
+    
     public boolean prepTheRobot(){
         deployArm(); Timer.delay(0.5);
         deployForks(); Timer.delay(0.5);
@@ -72,15 +81,21 @@ public class ObjM implements RobotMap{
     public void deployArm(){pl("Deploying the arm");}
     public void deployForks(){pl("Deploying the forks");}
     public void moveForks(double speed, int preset){
-        pl("Moving the forks");
+       
+        if(botLimit.get() && speed < 0){ // ARBITRARY NUMBER
+            ForkMotor.set(0);
+        }
         
-    //TODO:    if((topLimit.get() && speed < 0) || (botLimit.get() && speed > 0)){speed = 0.0;}
-    
-    //Check to see if we are at either the upper or lower limit (limit switches). Yes: set speed = 0 as appropriate
+        if(topLimit.get() && speed > 0){
+            ForkMotor.set(0);
+        }     
+        
+    //TODO:    
     //Check to see if we are moving under a preset command and if so if at that preset Yes: speed = 0 and clear the preset condition
     //If not at limits and not at preset then run the fork motor at speed "speed"
         
         ForkMotor.set(speed);
+        pl("Moving the forks");
     }
     
     //I'm tired of typing System.out.println

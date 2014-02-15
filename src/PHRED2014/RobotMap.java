@@ -78,6 +78,17 @@ public interface RobotMap {
     public final static int RStickX = 4;
     public final static int RStickY = 5;
     public final static int DPadX = 6;
+    public final static int XA = 1;
+    public final static int XB = 2;
+    public final static int XX = 3;
+    public final static int XY = 4;
+    public final static int BumperL = 5;
+    public final static int BumperR = 6;
+    public final static int Back = 7;
+    public final static int Start = 8;
+    public final static int JoyPressL = 9;
+    public final static int JoyPressR = 10;
+
     
     public final static double DeadZone = 0.05;
     

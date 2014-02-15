@@ -20,6 +20,7 @@ public class OI implements RobotMap{
         driverStation = DriverStation.getInstance();
         MechStick = new Joystick(Xstreme3D);
         XStick = new Joystick(GamePad);
+        
     }
     
     public double getJoyValue(int axis){
