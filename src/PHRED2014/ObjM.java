@@ -1,6 +1,7 @@
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ObjM implements RobotMap{
     
@@ -34,18 +35,18 @@ public class ObjM implements RobotMap{
     }
     
     //Methods
-/*    public void VerticalFork(){ // Forklift up and down
+    public void VerticalFork(){ // Forklift up and down
         moveForks(COVOP.getXBoxAxisValue(LStickY), NO_PRESET);
     }
         
     public void TankBelt(){ // Belt movement (It looks like a tank)
-        if(COVOP.getXBoxAxisValue(RStickY) > 0.05){
+        if(COVOP.getXBoxAxisValue(RStickY) > DeadZone){
             BeltMotor.setDirection(Relay.Direction.kForward);    
         }
-        if(COVOP.getXBoxAxisValue(RStickY) < -0.05){
+        if(COVOP.getXBoxAxisValue(RStickY) < -DeadZone){
             BeltMotor.setDirection(Relay.Direction.kReverse);
         }
-        if(COVOP.getXBoxAxisValue(RStickY) < 0.05 && COVOP.getXBoxAxisValue(RStickY) > -0.05){
+        if(COVOP.getXBoxAxisValue(RStickY) < DeadZone && COVOP.getXBoxAxisValue(RStickY) > -DeadZone){
             BeltMotor.set(Relay.Value.kOff);
         }
     }
@@ -53,12 +54,6 @@ public class ObjM implements RobotMap{
    /* public boolean getXBoxButton(int button){
         return COVOP.XStick.getButton(button);
     }       */
-/*TODO: Uncomment when encoders are added to the robot. Needs work: Probably belongs in VerticleFork().
-    public int Carriage(){
-        int encodercount = encoder.get();
-        return encodercount;
-    }
- */
 
     //Prepare the robot for competition
     public int GetEncoder(){
@@ -73,12 +68,12 @@ public class ObjM implements RobotMap{
         return true;
     }
 
-    public void deployArm(){pl("Deploying the arm");
+    public void deployArm(){SmartDashboard.putString("Arm Status", "Deploying the arm");
         ArmDeploy.set(Relay.Value.kOn);
         Timer.delay(.05);
         ArmDeploy.set(Relay.Value.kOff);
     }
-    public void deployForks(){pl("Deploying the forks");
+    public void deployForks(){SmartDashboard.putString("Fork Status: ","Deploying the forks");
         ForkDeploy.set(Relay.Value.kOn);
         Timer.delay(.05);
         ForkDeploy.set(Relay.Value.kOff);
@@ -86,11 +81,11 @@ public class ObjM implements RobotMap{
     public void moveForks(double speed, int preset){
        
         if(botLimit.get() && speed < 0){ // ARBITRARY NUMBER
-            ForkMotor.set(0);
+            speed = 0;
         }
         
         if(topLimit.get() && speed > 0){
-            ForkMotor.set(0);
+            speed = 0;
         }     
         
     //TODO:    
@@ -99,10 +94,11 @@ public class ObjM implements RobotMap{
         
         ForkMotor.set(speed);
         pl("Moving the forks");
+        SmartDashboard.putString("Fork Status: ", "Moving the Forks");
     }
     
-    //I'm tired of typing System.out.println
-    public void pl(String s){System.out.println(s);}
-    public void pl(String s, int i){System.out.println(s + i);}
-    public void pl(String s, double d){System.out.println(s + d);}
+    //I'm tired of typing System.out.println You could just use smartDashboard :|
+    public void pl(String s){System.out.println(s); SmartDashboard.putString(s, s);}
+    public void pl(String s, int i){System.out.println(s + i); SmartDashboard.putInt(s, i);}
+    public void pl(String s, double d){System.out.println(s + d); SmartDashboard.putNumber(s, d);}
 }

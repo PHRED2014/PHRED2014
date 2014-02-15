@@ -1,19 +1,13 @@
 
 package PHRED2014;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.buttons.*;
+
 
 public class OI implements RobotMap{
     
     private DriverStation driverStation;
     private Joystick MechStick;
-    private Joystick XStick;
-    private Button SpeedI = new JoystickButton(MechStick, ButtonVII),
-            SpeedII = new JoystickButton(MechStick, ButtonVIII),
-            SpeedIII = new JoystickButton(MechStick, ButtonIX),
-            SpeedIV = new JoystickButton(MechStick, ButtonX),
-            SpeedV = new JoystickButton(MechStick, ButtonXI),
-            SpeedVI = new JoystickButton(MechStick, ButtonXII);        
+    private Joystick XStick;       
             
     
     public OI(){
