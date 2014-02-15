@@ -81,6 +81,7 @@ public interface RobotMap {
     public final static int DRIVE_SPEED_IDX = 1;
     public final static int TURN_SPEED_IDX = 2;
     public final static int RANGE_TOLERANCE_IDX = 3;
+    public final static int SCORE_RANGE_IDX = 4;
     
     public final static int NO_PRESET = -1;
 }

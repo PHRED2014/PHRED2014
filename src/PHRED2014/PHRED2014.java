@@ -34,7 +34,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
         if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
-        else{ObjMan.moveForks(-1.0, NO_PRESET);}
+//TODO:        else{ObjMan.moveForks(-1.0, NO_PRESET);}
 
         switch(COVOP.getAutoID()){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;

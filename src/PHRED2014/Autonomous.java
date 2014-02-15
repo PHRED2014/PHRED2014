@@ -17,10 +17,26 @@ public class Autonomous implements RobotMap{
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, ObjM om, OI oi){
-        stopRange = round(14 * 25.4);//Fork length: 14" converted to mm
         trainDrive = td;
         ObjMan = om;
         COVOP = oi;
+
+        stopRange = round(COVOP.getAutoSpeedSettings(SCORE_RANGE_IDX));
+
+/*
+ *Things to try:
+        
+        1)Move the Forward US to being the last sensor created. The RR feature
+        of Ultrasonic uses a FILO approach to chaining the sensors.  Therefore
+        the last sensor created is considered to be the first in the ping array.
+        
+        2)Handle the ping/echo manually.  Still use the Ultrasonic class but
+        turn off the RR feature.
+        
+        3)Go fully manual.  Clone the Ultrasonic class, keeping the important
+        stuff and throwing out the fluff: RR, threading, etc.
+ *
+ */
         
         usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
         usForward.setAutomaticMode(false);
@@ -49,7 +65,7 @@ public class Autonomous implements RobotMap{
             }
             case CENTER:
             default:
-                stopRange = 3048;// ~10 feet
+                stopRange = 3000;// ~10 feet
                 break;
         }
     }
@@ -57,7 +73,7 @@ public class Autonomous implements RobotMap{
     //Methods
     public void driveForward(){
         while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        rangeForward = 6100; //Init to ~20ft until the forward ultrasonic sensor is installed
+        //rangeForward = 6000; //Init to ~20ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
@@ -66,7 +82,7 @@ public class Autonomous implements RobotMap{
     
     public void scrapeTheWall(int script){
         while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        rangeForward = 3048; //Init to ~10ft until the forward ultrasonic sensor is installed
+        //rangeForward = 3000; //Init to ~10ft until the forward ultrasonic sensor is installed
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){
