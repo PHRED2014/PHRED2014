@@ -20,6 +20,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     
     Random r = new Random(); // !-- THIS IS FOR TEST FUNCTION --! 
     int graph = 5; // !-- SO IS THIS --!
+    boolean invert = false; // !-- AND THIS --!
 
     boolean robotPrepped = false;
 
@@ -65,6 +66,11 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     
     // This function is called periodically during test mode
     public void testPeriodic() {
+        if(!invert){
+            trainDrive.InvertMecha();
+            invert = true;
+        }
+        
          if(COVOP.getXBoxButton(XA)){
              ObjMan.deployForks();
          }
