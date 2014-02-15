@@ -12,7 +12,9 @@ public class ObjM implements RobotMap{
     private OI COVOP;
     
     private Victor ForkMotor;
-    private Victor BeltMotor;
+    private Relay BeltMotor;
+    private Relay ForkDeploy;
+    private Relay ArmDeploy;
     private Encoder encoder;
     private DigitalInput topLimit;
     private DigitalInput botLimit;
@@ -27,7 +29,9 @@ public class ObjM implements RobotMap{
         COVOP = oi;
         
         ForkMotor = new Victor(FORK_PORT);
-        BeltMotor = new Victor(PWMIII); //Is this a victor or a relay?
+        BeltMotor = new Relay(PWMIII); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
+        ArmDeploy = new Relay(SpikeI);//it controls the one-time deployment solenoid of the Belt. Dunno the port
+        ForkDeploy = new Relay(SpikeII);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  
@@ -43,15 +47,14 @@ public class ObjM implements RobotMap{
     }
         
     public void TankBelt(){ // Belt movement (It looks like a tank)
-        double Xval = COVOP.getXBoxTrigger();
-        
-        if(Xval > 0){
-            BeltMotor.set(BELT_SPEED);
+        if(COVOP.getXBoxAxisValue(RStickY) > 0.05){
+            BeltMotor.setDirection(Relay.Direction.kForward);    
         }
-        else if(Xval < 0){
-            BeltMotor.set(-BELT_SPEED);
-        }else{
-            BeltMotor.set(0.0);
+        if(COVOP.getXBoxAxisValue(RStickY) < -0.05){
+            BeltMotor.setDirection(Relay.Direction.kReverse);
+        }
+        if(COVOP.getXBoxAxisValue(RStickY) < 0.05 && COVOP.getXBoxAxisValue(RStickY) > -0.05){
+            BeltMotor.set(Relay.Value.kOff);
         }
     }
 
@@ -78,8 +81,16 @@ public class ObjM implements RobotMap{
         return true;
     }
 
-    public void deployArm(){pl("Deploying the arm");}
-    public void deployForks(){pl("Deploying the forks");}
+    public void deployArm(){pl("Deploying the arm");
+    ArmDeploy.set(Relay.Value.kOn);
+    Timer.delay(.05);
+    ArmDeploy.set(Relay.Value.kOff);
+    }
+    public void deployForks(){pl("Deploying the forks");
+    ForkDeploy.set(Relay.Value.kOn);
+    Timer.delay(.05);
+    ForkDeploy.set(Relay.Value.kOff);
+    }
     public void moveForks(double speed, int preset){
        
         if(botLimit.get() && speed < 0){ // ARBITRARY NUMBER
