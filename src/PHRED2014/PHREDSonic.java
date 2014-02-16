@@ -9,6 +9,7 @@ package PHRED2014;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
@@ -37,6 +38,7 @@ public class PHREDSonic {
     public void ping() {
         counter.reset(); // reset the counter to zero (invalid data now)
         pingChannel.pulse(pingTime); // do the ping to start getting a single range
+        Timer.delay(0.001);
     }
 
     public double getRangeMM() {

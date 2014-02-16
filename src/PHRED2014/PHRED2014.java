@@ -28,7 +28,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called once prior to autonomous
     public void autonomousInit(){
         //Instantiate the autonomous object
-        auto = new Autonomous(trainDrive, ObjMan, COVOP);
+        auto = new Autonomous(trainDrive, COVOP);
     }
 
     // This method is called periodically during autonomous
