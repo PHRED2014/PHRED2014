@@ -12,17 +12,22 @@ package PHRED2014;
  */
 public class Utils{
     
-    private double elapsedTime = 0.0;
-    private double startTime = 0.0;
-    private boolean STOP = false;
+    private static double elapsedTime = 0.0;
+    private static double startTime = 0.0;
+    private static boolean running = false;
     
-    public Utils(){}
+    //public Utils(){}
         
-    public void timeReset(){startTime = elapsedTime = 0.0; STOP = false;}
-    public void timeStart(){startTime = System.currentTimeMillis(); STOP = false;}
-    public void timeStop(){STOP = true;}
-    public double timeElapsed(){
-        if(STOP) return elapsedTime;
+    public static void timeReset(){startTime = elapsedTime = 0.0;}
+    public static void timeStart(){startTime = System.currentTimeMillis(); running = true;}
+    public static void timeStop(){running = false;}
+    public static double timeElapsed(){
+        if(!running) return elapsedTime;
         else return elapsedTime = System.currentTimeMillis() - startTime;
     }
+    
+    public static int round(double n){
+        if ((n % 1) >= 0.5) n++;
+        return (int)(n - (n % 1));
+    }//End round
 }

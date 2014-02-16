@@ -36,27 +36,24 @@ public class PHREDSonic {
     }
 
     public void ping() {
-        counter.reset(); // reset the counter to zero (invalid data now)
+        counter.reset();             // reset the counter to zero
         pingChannel.pulse(pingTime); // do the ping to start getting a single range
         Timer.delay(0.001);
     }
 
     public double getRangeMM() {
-        if (counter.get() > 1) {
-            return counter.getPeriod() * sosMMPerSec / 2.0;
-        } else {
-            return 0;
-        }
+        if (counter.get() > 1){return counter.getPeriod() * sosMMPerSec / 2.0;}
+        else{return 0;}
     }
     
     public void free(){
-        pingChannel.free();
-        pingChannel = null;
-        
+        counter.free();
+        counter = null;
+
         echoChannel.free();
         echoChannel = null;
         
-        counter.free();
-        counter = null;
+        pingChannel.free();
+        pingChannel = null;
     }
 }

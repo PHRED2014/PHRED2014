@@ -1,13 +1,11 @@
 
 package PHRED2014;
-import edu.wpi.first.wpilibj.*;
 
 public class Autonomous implements RobotMap{
     
     //Instance variables
     private final TrainDrive trainDrive;
-    private final OI COVOP;
-    private Utils utils;
+    //private Utils utils;
     
     private PHREDSonic usFore = null;
     private PHREDSonic usAft = null;
@@ -18,29 +16,25 @@ public class Autonomous implements RobotMap{
     private double turnSpeed, driveSpeed;
 
     //Contstructor(s)
-    public Autonomous(TrainDrive td, OI oi){
+    public Autonomous(TrainDrive td, int autoID, double[] autoSpeedSettings){
         trainDrive = td;
-        COVOP = oi;
-
-        utils = new Utils();
-        utils.timeReset();
-        utils.timeStart();
+        //utils = new Utils();
         
-        stopRange = round(COVOP.getAutoSpeedSettings(SCORE_RANGE_IDX));
-        rangeTolerance = round(COVOP.getAutoSpeedSettings(RANGE_TOLERANCE_IDX));
-        turnSpeed = round(COVOP.getAutoSpeedSettings(TURN_SPEED_IDX));
-        driveSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
+        stopRange = (int)autoSpeedSettings[SCORE_RANGE_IDX];
+        rangeTolerance = (int)autoSpeedSettings[RANGE_TOLERANCE_IDX];
+        turnSpeed = autoSpeedSettings[TURN_SPEED_IDX];
+        driveSpeed = autoSpeedSettings[DRIVE_SPEED_IDX];
         
-        usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-        switch(COVOP.getAutoID()){
+        if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        switch(autoID){
             case WALL_LEFT:{
-                usFore = new PHREDSonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
-                usAft = new PHREDSonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
+                if(usFore == null)usFore = new PHREDSonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
+                if(usAft == null)usAft = new PHREDSonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
                 break;
             }
             case WALL_RIGHT:{
-                usFore = new PHREDSonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
-                usAft = new PHREDSonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
+                if(usFore == null)usFore = new PHREDSonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
+                if(usAft == null)usAft = new PHREDSonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
                 break;
             }
             case CENTER:
@@ -48,12 +42,16 @@ public class Autonomous implements RobotMap{
                 stopRange = 3000;// ~10 feet
                 break;
         }//End switch
+        
+        Utils.timeReset();
+        Utils.timeStart();
+        
     }//End Constructor
     
     //Methods
     public void driveForward(){
         usForward.ping();
-        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        while((rangeForward = Utils.round(usForward.getRangeMM())) == 0){}
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
@@ -61,23 +59,21 @@ public class Autonomous implements RobotMap{
     }
     
     public void scrapeTheWall(int script){
-        pl("Time: " + utils.timeElapsed());
+        pl("Time: " + Utils.timeElapsed());
         
         usForward.ping();
-        while((rangeForward = round(usForward.getRangeMM())) == 0){}
+        while((rangeForward = Utils.round(usForward.getRangeMM())) == 0){}
         pl("Range  Forward: ", rangeForward);
 
         if(rangeForward > stopRange){
             usFore.ping();
-            while((rangeFore = round(usFore.getRangeMM())) == 0){}
-            pl("Range FORE: ", rangeFore);
+            while((rangeFore = Utils.round(usFore.getRangeMM())) == 0){}
             
             usFore.ping();
-            while((rangeAft = round(usAft.getRangeMM())) == 0){}
-            pl("Range  AFT: ", rangeAft);
+            while((rangeAft = Utils.round(usAft.getRangeMM())) == 0){}
             
             rangeDiff = rangeFore - rangeAft;
-            pl("Range DIFF: ", rangeDiff);
+            System.out.println("Range F,A,D: "+rangeFore+" "+rangeAft+" "+rangeDiff);
             
             if(rangeTolerance <= Math.abs(rangeDiff)){
                 if(rangeDiff > 0){
@@ -87,7 +83,7 @@ public class Autonomous implements RobotMap{
                       else{driveForGoal(TURN_LEFT);}
             }else{driveForGoal(STRAIGHT);}
         }else{
-            utils.timeStop();
+            Utils.timeStop();
             driveForGoal(STOP);
             strafeToScorePosition();
             scoreTheGoal();
@@ -117,11 +113,6 @@ public class Autonomous implements RobotMap{
 //TODO: Fork to position, and eject the ball
     }//End scoreTheGoal
 
-    private int round(double n){
-        if ((n % 1) >= 0.5) n++;
-        return (int)(n - (n % 1));
-    }//End round
-    
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}
     public void pl(String s, int i){System.out.println(s + i);}
