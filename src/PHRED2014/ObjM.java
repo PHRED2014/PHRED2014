@@ -88,9 +88,24 @@ public class ObjM implements RobotMap{
             speed = 0;
         }     
         
-    //TODO:    
-    //Check to see if we are moving under a preset command and if so if at that preset Yes: speed = 0 and clear the preset condition
-    //If not at limits and not at preset then run the fork motor at speed "speed"
+        if(preset == NO_PRESET){ //This stuff should make it move to the preset. 
+            speed = speed;
+        } else if(encoder.get() < preset){
+            speed *= 1;
+        } else if(encoder.get() > preset){
+            speed *= -1;
+        } else if(encoder.get() == preset){ //stop plz
+            preset = NO_PRESET;
+            speed = 0;
+        }
+        
+        if(botLimit.get() && speed < 0){ // Redundant system just in case. We is sorry if the makes the robot too heavy.
+            speed = 0;
+        }
+        
+        if(topLimit.get() && speed > 0){
+            speed = 0;
+        }
         
         ForkMotor.set(speed);
         pl("Moving the forks");
@@ -108,6 +123,12 @@ public class ObjM implements RobotMap{
         
         if((!COVOP.getXBoxButton(down) && !COVOP.getXBoxButton(up)) || (COVOP.getXBoxButton(down) && COVOP.getXBoxButton(up))){
             moveForks(0, NO_PRESET);
+        }
+    }
+    
+    public void Move_to_the_preset_values_that_we_determined_at_a_previous_time_(int button, int preset, int speed){
+        if(COVOP.getXBoxButton(button)){
+            moveForks(speed, preset);
         }
     }
     

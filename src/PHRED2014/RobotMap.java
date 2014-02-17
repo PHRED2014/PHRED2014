@@ -102,4 +102,12 @@ public interface RobotMap {
     public final static int SCORE_RANGE_IDX = 4;
     
     public final static int NO_PRESET = -1;
+     
+   /* -- TELEOP PRESETS -- */
+    
+    //Carrage Fork presets
+    public final static int CF_BOTTOM = 7; //LOL RANDOM NUMBER
+    public final static int CF_TOP = 10;
+    public final static int CF_MID = 22000;
+    public final static int CF_SCORE = -23;
 }

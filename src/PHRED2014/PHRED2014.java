@@ -60,8 +60,12 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     public void teleopPeriodic() {
         if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
         trainDrive.MechaDrive();
-        //ObjMan.TankBelt();
-        //ObjMan.VerticalFork();
+        ObjMan.TankBelt(RStickY);
+        ObjMan.VerticalFork();
+        ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XA, CF_BOTTOM, 1);
+        ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XY, CF_TOP, 1);
+        ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XB, CF_MID, 1);
+        ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XX, CF_SCORE, 1);
     }
     
     // This function is called periodically during test mode
