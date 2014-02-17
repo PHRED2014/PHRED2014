@@ -23,7 +23,7 @@ public class Utils{
     public static void timeStop(){running = false;}
     public static double timeElapsed(){
         if(!running) return elapsedTime;
-        else return elapsedTime = System.currentTimeMillis() - startTime;
+        else return elapsedTime = (System.currentTimeMillis() - startTime)/1000;
     }
     
     public static int round(double n){
