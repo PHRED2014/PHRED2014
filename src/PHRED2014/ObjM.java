@@ -21,10 +21,10 @@ public class ObjM implements RobotMap{
     public ObjM(OI oi){
         COVOP = oi;
         
-        ForkMotor = new Victor(FORK_PORT);
-        BeltMotor = new Relay(SPIKEIII); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
-        ArmDeploy = new Relay(SPIKEI);//it controls the one-time deployment solenoid of the Belt. Dunno the port
-        ForkDeploy = new Relay(SPIKEII);//it controls the one-time deployment solenoid of the Forks. Dunno the port
+        ForkMotor = new Victor(FORK_MOTOR);
+        BeltMotor = new Relay(BELT_SPIKE); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
+        ArmDeploy = new Relay(ARM_SPIKE);//it controls the one-time deployment solenoid of the Belt. Dunno the port
+        ForkDeploy = new Relay(FORK_SPIKE);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
  

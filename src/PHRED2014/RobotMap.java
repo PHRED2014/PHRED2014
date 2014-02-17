@@ -33,16 +33,16 @@ public interface RobotMap {
     public final static int CODERII = 14;
 
 //Relays
-    public final static int SPIKEI = 1; //Need to verify these settings
-    public final static int SPIKEII = 2;
-    public final static int SPIKEIII = 3;
+    public final static int ARM_SPIKE = 1; //Need to verify these settings
+    public final static int FORK_SPIKE = 2;
+    public final static int BELT_SPIKE = 3;
     
 //PWM
     public final static int LEFT_FRONT_MOTOR = 1; //Train drive motors
     public final static int LEFT_REAR_MOTOR = 2;
     public final static int RIGHT_FRONT_MOTOR = 3;
     public final static int RIGHT_REAR_MOTOR = 4;
-    public final static int FORK_PORT = 5; //Need to verify this setting
+    public final static int FORK_MOTOR = 5; //Need to verify this setting
     
     public final static double BELT_SPEED = 1.0;
     public final static double DRIVE_MOTOR_MOD = 1.0;
