@@ -4,20 +4,18 @@ package PHRED2014;
 public class Autonomous implements RobotMap{
     
     //Instance variables
-    private final TrainDrive trainDrive;
+    private TrainDrive trainDrive;
     
     private PHREDSonic usFore = null;
     private PHREDSonic usAft = null;
     private PHREDSonic usForward = null;
 
-    private double rangeFore, rangeAft,  
-                rangeDiff, stopRange, rangeTolerance;
-    private double turnSpeed, driveSpeed, rangeForward;
+    private double rangeFore, rangeAft, rangeDiff, stopRange, rangeTolerance,
+            turnSpeed, driveSpeed, rangeForward, plSpeed, prSpeed = 0.0;
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, int autoID, double[] autoSpeedSettings){
         trainDrive = td;
-        //utils = new Utils();
         
         stopRange = autoSpeedSettings[SCORE_RANGE_IDX - 1];
         rangeTolerance = autoSpeedSettings[RANGE_TOLERANCE_IDX - 1];
@@ -52,10 +50,7 @@ public class Autonomous implements RobotMap{
     public void driveForward(){
         pl("Time: " + Utils.timeElapsed());
         
-        usForward.ping();
-        //while((rangeForward = Utils.round(usForward.getRangeMM())) == 0){}
-        rangeForward = Utils.round(usForward.getRangeMM());
-
+        rangeForward = getTheRange(usForward);
         pl("Range  Forward: ", rangeForward);
 
 //        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
@@ -63,35 +58,16 @@ public class Autonomous implements RobotMap{
     }
     
     public void scrapeTheWall(int script){
-        //pl("SR: " + stopRange);
-        //pl("RT: " + rangeTolerance);
-        //pl("TS: " + turnSpeed);
-        //pl("DS: " + driveSpeed);
         pl("Time: " + Utils.timeElapsed());
         
         rangeForward = getTheRange(usForward);
         pl("Range Forward: ", rangeForward);
-        //while(true){
-        //    usForward.ping();
-        //    if((rangeForward = usForward.getRangeMM()) != 0)break;
-        //}
 
         if(rangeForward > stopRange){
-            while(true){
-                usFore.ping();
-                if((rangeFore = Utils.round(usFore.getRangeMM())) != 0)break;
-            }
-            pl("Range    Fore: ", rangeFore);
-            
-            while(true){
-                usAft.ping();
-                if((rangeAft = Utils.round(usAft.getRangeMM())) != 0)break;
-            }
-            pl("Range     Aft: ", rangeAft);
-    
+            rangeFore = getTheRange(usFore);
+            rangeAft = getTheRange(usAft);
             rangeDiff = rangeFore - rangeAft;
-            //System.out.println("Range F,A,D: "+rangeFore+" "+rangeAft+" "+rangeDiff);
-            pl("Range    Diff: " + rangeDiff);
+            System.out.println("Range F,A,D: "+rangeFore+" "+rangeAft+" "+rangeDiff);
             
             if(rangeTolerance <= Math.abs(rangeDiff)){
                 if(rangeDiff > 0){
@@ -120,7 +96,10 @@ public class Autonomous implements RobotMap{
             default: pl("Stop"); lSpeed = rSpeed = 0.0;
         }//End Switch
 
-        trainDrive.driveLikeATank(lSpeed, rSpeed);
+        if(plSpeed != lSpeed || prSpeed != rSpeed){
+            plSpeed = lSpeed; prSpeed = rSpeed;
+            trainDrive.driveLikeATank(lSpeed, rSpeed);
+        }
     }//End driveForGoal
 
     private void strafeToScorePosition(){
@@ -133,10 +112,13 @@ public class Autonomous implements RobotMap{
     
     private double getTheRange(PHREDSonic us){
         double range;
+        int count = 0;
         while(true){
+            count++;
             us.ping();
             if((range = us.getRangeMM())!= 0.0)break;
         }
+        pl("count: " + count);
         if(range > 3000.0) range = 3000.0;
         return range;
     }

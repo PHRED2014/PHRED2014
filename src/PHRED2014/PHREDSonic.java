@@ -43,7 +43,7 @@ public class PHREDSonic {
 
     public double getRangeMM() {
         if (counter.get() > 1){
-            System.out.println("period: " + counter.getPeriod());
+            //System.out.println("period: " + counter.getPeriod());
             return counter.getPeriod() * sosMMPerSec / 2.0;
         }
         else{return 0;}
