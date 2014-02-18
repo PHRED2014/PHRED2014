@@ -28,6 +28,12 @@ public class TrainDrive implements RobotMap{
         YJoy = COVOP.getJoyValue(YAxis)*Speed;
         ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
         
+        SmartDashboard.putNumber("XAxis", XJoy);
+        SmartDashboard.putNumber("YAxis", YJoy);
+        SmartDashboard.putNumber("ZAxis", ZJoy);
+        
+        
+        //driveMotors.mecanumDrive_Cartesian(-XJoy, 0, 0, 0);       
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
         
         SmartDashboard.putNumber("ORCA Effeciency", Speed);
@@ -38,8 +44,11 @@ public class TrainDrive implements RobotMap{
     }
     
     public void InvertMecha(){
-        driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-        driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+       driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+       driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        
+        //driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+       // driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
     }
     
     public void BoxDrive(){

@@ -53,7 +53,8 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     //This method is called once prior to teleop
     public void teleopInit(){
-        trainDrive.InvertMecha();
+        trainDrive.InvertMecha();  
+       // ObjMan.deployForks();
     }
 
     // This method is called periodically during operator control
@@ -61,11 +62,19 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
         trainDrive.MechaDrive();
         ObjMan.TankBelt(RStickY);
-        ObjMan.VerticalFork();
+        ObjMan.VerticalFork(LStickY);
+        SmartDashboard.putNumber("RStrickY: ", COVOP.getXBoxAxisValue(RStickY));
+        SmartDashboard.putNumber("RStrickX: ", COVOP.getXBoxAxisValue(RStickX));
+        SmartDashboard.putNumber("Incoder", ObjMan.GetEncoder());
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XA, CF_BOTTOM, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XY, CF_TOP, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XB, CF_MID, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XX, CF_SCORE, 1);
+        
+//        if (COVOP.getXBoxButton(XA))
+//        {
+//            SmartDashboard.putString("flagella: ", "seventy seven");
+//        }
     }
     
     // This function is called periodically during test mode

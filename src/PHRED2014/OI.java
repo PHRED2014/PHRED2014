@@ -121,6 +121,6 @@ public class OI implements RobotMap{
     }
     
     public boolean getXBoxButton(int button){
-        return MechStick.getRawButton(button);
+        return XStick.getRawButton(button);
     }
 }

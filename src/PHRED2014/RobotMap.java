@@ -42,7 +42,7 @@ public interface RobotMap {
     public final static int LEFT_REAR_MOTOR = 2;
     public final static int RIGHT_FRONT_MOTOR = 3;
     public final static int RIGHT_REAR_MOTOR = 4;
-    public final static int FORK_MOTOR = 5; //Need to verify this setting
+    public final static int FORK_MOTOR = 8; //Need to verify this setting
     
     public final static double BELT_SPEED = 1.0;
     public final static double DRIVE_MOTOR_MOD = 1.0;
@@ -82,7 +82,7 @@ public interface RobotMap {
     public final static int JoyPressL = 9;
     public final static int JoyPressR = 10;
     
-    public final static double DeadZone = 0.05;
+    public final static double DeadZone = 0.10;
     
 /* -- AUTONOMOUS CONTSTANTS -- */
     
@@ -106,8 +106,8 @@ public interface RobotMap {
    /* -- TELEOP PRESETS -- */
     
     //Carrage Fork presets
-    public final static int CF_BOTTOM = 7; //LOL RANDOM NUMBER
-    public final static int CF_TOP = 10;
-    public final static int CF_MID = 22000;
-    public final static int CF_SCORE = -23;
+    public final static int CF_BOTTOM = 0; //LOL RANDOM NUMBER
+    public final static int CF_TOP = 2444;
+    public final static int CF_MID = 777;
+    public final static int CF_SCORE = 594;
 }

@@ -35,16 +35,17 @@ public class ObjM implements RobotMap{
     }
     
     //Methods
-    public void VerticalFork(){ // Forklift up and down
-        moveForks(COVOP.getXBoxAxisValue(LStickY), NO_PRESET);
+    public void VerticalFork(int axis){ // Forklift up and down
+        moveForks(COVOP.getXBoxAxisValue(axis), NO_PRESET);
     }
         
     public void TankBelt(int axis){ // Belt movement (It looks like a tank)
+             
         if(COVOP.getXBoxAxisValue(axis) > DeadZone){
-            BeltMotor.setDirection(Relay.Direction.kForward);    
+            BeltMotor.set(Relay.Value.kForward);
         }
         if(COVOP.getXBoxAxisValue(axis) < -DeadZone){
-            BeltMotor.setDirection(Relay.Direction.kReverse);
+            BeltMotor.set(Relay.Value.kReverse);
         }
         if(COVOP.getXBoxAxisValue(axis) < DeadZone && COVOP.getXBoxAxisValue(axis) > -DeadZone){
             BeltMotor.set(Relay.Value.kOff);
@@ -64,52 +65,48 @@ public class ObjM implements RobotMap{
     public boolean prepTheRobot(){
         deployArm(); Timer.delay(0.5);
         deployForks(); Timer.delay(0.5);
-//TODO:        moveForks(-1.0, 100); Timer.delay(0.5);//preset ???
         return true;
     }
 
     public void deployArm(){SmartDashboard.putString("Arm Status", "Deploying the arm");
-        ArmDeploy.set(Relay.Value.kOn);
-        Timer.delay(.05);
-        ArmDeploy.set(Relay.Value.kOff);
+        ArmDeploy.set(Relay.Value.kForward);
+        Timer.delay(1.0);
+        ArmDeploy.set(Relay.Value.kReverse);
     }
     public void deployForks(){SmartDashboard.putString("Fork Status: ","Deploying the forks");
-        ForkDeploy.set(Relay.Value.kOn);
-        Timer.delay(.05);
-        ForkDeploy.set(Relay.Value.kOff);
+        ForkDeploy.set(Relay.Value.kForward);
+        Timer.delay(1.0);
+        ForkDeploy.set(Relay.Value.kReverse);
     }
     public void moveForks(double speed, int preset){
-       
-        if(botLimit.get() && speed < 0){ // ARBITRARY NUMBER
+        String bob = "EXCEPTION";
+        if(!botLimit.get() && speed > 0){ // ARBITRARY NUMBER
             speed = 0;
-        }
-        
-        if(topLimit.get() && speed > 0){
+            encoder.reset();
+            bob = "Bottom Limit Tripped";
+        }else if(!topLimit.get() && speed < 0){
             speed = 0;
-        }     
-        
-        if(preset == NO_PRESET){ //This stuff should make it move to the preset. 
-            speed = speed;
+            bob = "Top Limit Tripped";
+        }else if(preset == NO_PRESET){ //This stuff should make it move to the preset. 
+            speed = -speed;
+            bob = "Moving the Forks";
         } else if(encoder.get() < preset){
             speed *= 1;
+            bob = "Moving the Forks";
         } else if(encoder.get() > preset){
             speed *= -1;
+            bob = "Moving the Forks";
         } else if(encoder.get() == preset){ //stop plz
             preset = NO_PRESET;
             speed = 0;
-        }
-        
-        if(botLimit.get() && speed < 0){ // Redundant system just in case. We is sorry if the makes the robot too heavy.
-            speed = 0;
-        }
-        
-        if(topLimit.get() && speed > 0){
-            speed = 0;
+            bob = "Not Moving the forks";
+        }else {
+            bob = "Not Moving the Forks";
         }
         
         ForkMotor.set(speed);
         pl("Moving the forks");
-        SmartDashboard.putString("Fork Status: ", "Moving the Forks");
+        SmartDashboard.putString("Fork Status: ", bob);
     }
     
     public void XFork(int up, int down){ //This is for the test function.
