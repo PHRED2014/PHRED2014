@@ -1,101 +1,75 @@
 
 package PHRED2014;
-import edu.wpi.first.wpilibj.*;
 
 public class Autonomous implements RobotMap{
     
     //Instance variables
-    private final TrainDrive trainDrive;
-    private final ObjM ObjMan;
-    private final OI COVOP;
+    private TrainDrive trainDrive;
     
-    private Ultrasonic usFore = null;
-    private Ultrasonic usAft = null;
-    private Ultrasonic usForward = null;
+    private PHREDSonic usFore = null;
+    private PHREDSonic usAft = null;
+    private PHREDSonic usForward = null;
 
-    private int rangeFore, rangeAft, rangeForward, rangeDiff, stopRange;
+    private double rangeFore, rangeAft, rangeDiff, stopRange, rangeTolerance,
+            turnSpeed, driveSpeed, rangeForward, plSpeed, prSpeed = 0.0;
 
     //Contstructor(s)
-    public Autonomous(TrainDrive td, ObjM om, OI oi){
+    public Autonomous(TrainDrive td, int autoID, double[] autoSpeedSettings){
         trainDrive = td;
-        ObjMan = om;
-        COVOP = oi;
+        
+        stopRange = autoSpeedSettings[SCORE_RANGE_IDX - 1];
+        rangeTolerance = autoSpeedSettings[RANGE_TOLERANCE_IDX - 1];
+        turnSpeed = autoSpeedSettings[TURN_SPEED_IDX - 1];
+        driveSpeed = autoSpeedSettings[DRIVE_SPEED_IDX - 1];
+        
+        if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        //usForward = new PHREDSonic(9,10);
 
-        stopRange = round(COVOP.getAutoSpeedSettings(SCORE_RANGE_IDX));
-
-/*
- *Things to try:
-        
-        1)Move the Forward US to being the last sensor created. The RR feature
-        of Ultrasonic uses a FILO approach to chaining the sensors.  Therefore
-        the last sensor created is considered to be the first in the ping array.
-        
-        2)Handle the ping/echo manually.  Still use the Ultrasonic class but
-        turn off the RR feature.
-        
-        3)Go fully manual.  Clone the Ultrasonic class, keeping the important
-        stuff and throwing out the fluff: RR, threading, etc.
- *
- */
-        
-        usForward = new Ultrasonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-        usForward.setAutomaticMode(false);
-        usForward.setEnabled(true);
-
-        switch(COVOP.getAutoID()){
+        switch(autoID){
             case WALL_LEFT:{
-                usFore = new Ultrasonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
-                usFore.setAutomaticMode(false);
-                usFore.setEnabled(true);
- 
-                usAft = new Ultrasonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
-                usAft.setAutomaticMode(true);
-                usAft.setEnabled(true);
+                if(usFore == null)usFore = new PHREDSonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
+                if(usAft == null)usAft = new PHREDSonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
                 break;
             }
             case WALL_RIGHT:{
-                usFore = new Ultrasonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
-                usFore.setAutomaticMode(false);
-                usFore.setEnabled(true);
- 
-                usAft = new Ultrasonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
-                usAft.setAutomaticMode(true);
-                usAft.setEnabled(true);
+                if(usFore == null)usFore = new PHREDSonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
+                if(usAft == null)usAft = new PHREDSonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
                 break;
             }
             case CENTER:
             default:
                 stopRange = 3000;// ~10 feet
                 break;
-        }
-    }
+        }//End switch
+        
+        Utils.timeReset();
+        Utils.timeStart();
+    }//End Constructor
     
     //Methods
     public void driveForward(){
-        while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        //rangeForward = 6000; //Init to ~20ft until the forward ultrasonic sensor is installed
+        pl("Time: " + Utils.timeElapsed());
+        
+        rangeForward = getTheRange(usForward);
         pl("Range  Forward: ", rangeForward);
 
-        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
-        else{driveForGoal(STOP);}
+//        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
+//        else{driveForGoal(STOP);}
     }
     
     public void scrapeTheWall(int script){
-        while((rangeForward = round(usForward.getRangeMM())) == 0){}
-        //rangeForward = 3000; //Init to ~10ft until the forward ultrasonic sensor is installed
-        pl("Range  Forward: ", rangeForward);
+        pl("Time: " + Utils.timeElapsed());
+        
+        rangeForward = getTheRange(usForward);
+        pl("Range Forward: ", rangeForward);
 
         if(rangeForward > stopRange){
-            while((rangeFore = round(usFore.getRangeMM())) == 0){}
-            pl("Range FORE: ", rangeFore);
-            
-            while((rangeAft = round(usAft.getRangeMM())) == 0){}
-            pl("Range  AFT: ", rangeAft);
-            
+            rangeFore = getTheRange(usFore);
+            rangeAft = getTheRange(usAft);
             rangeDiff = rangeFore - rangeAft;
-            pl("Range DIFF: ", rangeDiff);
+            System.out.println("Range F,A,D: "+rangeFore+" "+rangeAft+" "+rangeDiff);
             
-            if(COVOP.getAutoSpeedSettings(RANGE_TOLERANCE_IDX) <= Math.abs(rangeDiff)){
+            if(rangeTolerance <= Math.abs(rangeDiff)){
                 if(rangeDiff > 0){
                     if(script == WALL_LEFT){driveForGoal(TURN_LEFT);}
                     else{driveForGoal(TURN_RIGHT);}
@@ -103,25 +77,29 @@ public class Autonomous implements RobotMap{
                       else{driveForGoal(TURN_LEFT);}
             }else{driveForGoal(STRAIGHT);}
         }else{
+            Utils.timeStop();
             driveForGoal(STOP);
             strafeToScorePosition();
             scoreTheGoal();
         }
-    }//End while
+    }
 
     private void driveForGoal(int direction){
         double lSpeed, rSpeed;
-        lSpeed = rSpeed = COVOP.getAutoSpeedSettings(DRIVE_SPEED_IDX);
+        lSpeed = rSpeed = -driveSpeed;
         
         switch (direction){
-            case TURN_LEFT: pl("Turn Left"); lSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
-            case TURN_RIGHT: pl("Turn Right"); rSpeed *= COVOP.getAutoSpeedSettings(TURN_SPEED_IDX); break;
+            case TURN_LEFT: pl("Turn Left"); lSpeed *= turnSpeed; break;
+            case TURN_RIGHT: pl("Turn Right"); rSpeed *= turnSpeed; break;
             case STRAIGHT: pl("Drive Straight"); break;
             case STOP:
             default: pl("Stop"); lSpeed = rSpeed = 0.0;
         }//End Switch
 
-        trainDrive.driveLikeATank(lSpeed, rSpeed);
+        if(plSpeed != lSpeed || prSpeed != rSpeed){
+            plSpeed = lSpeed; prSpeed = rSpeed;
+            trainDrive.driveLikeATank(lSpeed, rSpeed);
+        }
     }//End driveForGoal
 
     private void strafeToScorePosition(){
@@ -131,12 +109,20 @@ public class Autonomous implements RobotMap{
     private void scoreTheGoal(){
 //TODO: Fork to position, and eject the ball
     }//End scoreTheGoal
-
-    private int round(double n){
-        if ((n % 1) >= 0.5) n++;
-        return (int)(n - (n % 1));
-    }//End round
     
+    private double getTheRange(PHREDSonic us){
+        double range;
+        int count = 0;
+        while(true){
+            count++;
+            us.ping();
+            if((range = us.getRangeMM())!= 0.0)break;
+        }
+        pl("count: " + count);
+        if(range > 3000.0) range = 3000.0;
+        return range;
+    }
+
     //I'm tired of typing System.out.println
     public void pl(String s){System.out.println(s);}
     public void pl(String s, int i){System.out.println(s + i);}
