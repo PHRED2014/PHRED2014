@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class PHREDSonic {
 
-    private static final double pingTime = 10 * 1e-6;	///< Time (sec) for the ping trigger pulse.
+    private static final double pingTime = 10 * 1e-6;
     private static final double sosMMPerSec = 1130.0 * 12.0 * 25.4;
     private DigitalInput echoChannel = null;
     private DigitalOutput pingChannel = null;
@@ -27,7 +27,7 @@ public class PHREDSonic {
         pingChannel = new DigitalOutput(pc);
         echoChannel = new DigitalInput(ec);
 
-        counter = new Counter(echoChannel); // set up counter for this sensor
+        counter = new Counter(echoChannel); 
         counter.setMaxPeriod(1.0);
         counter.setSemiPeriodMode(true);
 
@@ -35,10 +35,10 @@ public class PHREDSonic {
         counter.start();
     }
 
-    public void ping() {
-        counter.reset();             // reset the counter to zero
-        pingChannel.pulse(pingTime); // do the ping to start getting a single range
-        Timer.delay(0.010);
+    public void ping(double delay) {
+        counter.reset();             
+        pingChannel.pulse(pingTime); 
+        Timer.delay(delay);
     }
 
     public double getRangeMM() {

@@ -1,6 +1,8 @@
 
 package PHRED2014;
 
+import edu.wpi.first.wpilibj.image.NIVision;
+
 public class Autonomous implements RobotMap{
     
     //Instance variables
@@ -10,8 +12,9 @@ public class Autonomous implements RobotMap{
     private PHREDSonic usAft = null;
     private PHREDSonic usForward = null;
 
-    private double rangeFore, rangeAft, rangeDiff, stopRange, rangeTolerance,
-            turnSpeed, driveSpeed, rangeForward, plSpeed, prSpeed = 0.0;
+    private double rangeFore, rangeAft, rangeDiff, stopRange, rangeTolerance = 0.0;
+    private double turnSpeed, driveSpeed, rangeForward, plSpeed, prSpeed = 0.0;
+    private double range[] = {3000,3000,3000,3000,3000,3000,3000,3000,3000,3000};
 
     //Contstructor(s)
     public Autonomous(TrainDrive td, int autoID, double[] autoSpeedSettings){
@@ -22,8 +25,8 @@ public class Autonomous implements RobotMap{
         turnSpeed = autoSpeedSettings[TURN_SPEED_IDX - 1];
         driveSpeed = autoSpeedSettings[DRIVE_SPEED_IDX - 1];
         
-        if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
-        //usForward = new PHREDSonic(9,10);
+        //if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        usForward = new PHREDSonic(9,10);
 
         switch(autoID){
             case WALL_LEFT:{
@@ -38,7 +41,7 @@ public class Autonomous implements RobotMap{
             }
             case CENTER:
             default:
-                stopRange = 3000;// ~10 feet
+                stopRange = 1000;// ~10 feet
                 break;
         }//End switch
         
@@ -48,9 +51,9 @@ public class Autonomous implements RobotMap{
     
     //Methods
     public void driveForward(){
-        pl("Time: " + Utils.timeElapsed());
+        //pl("CenterTime: " + Utils.timeElapsed());
         
-        rangeForward = getTheRange(usForward);
+        rangeForward = getTheRange(usForward, 0.020, true);
         pl("Range  Forward: ", rangeForward);
 
 //        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
@@ -59,13 +62,14 @@ public class Autonomous implements RobotMap{
     
     public void scrapeTheWall(int script){
         pl("Time: " + Utils.timeElapsed());
-        
-        rangeForward = getTheRange(usForward);
+        //if(Utils.timeElapsed() > 2.0)
+            rangeForward = getTheRange(usForward, 0.020, true);
+        //else rangeForward = 1500.0;
         pl("Range Forward: ", rangeForward);
 
         if(rangeForward > stopRange){
-            rangeFore = getTheRange(usFore);
-            rangeAft = getTheRange(usAft);
+            rangeFore = getTheRange(usFore, 0.010, false);
+            rangeAft = getTheRange(usAft, 0.010, false);
             rangeDiff = rangeFore - rangeAft;
             System.out.println("Range F,A,D: "+rangeFore+" "+rangeAft+" "+rangeDiff);
             
@@ -96,10 +100,10 @@ public class Autonomous implements RobotMap{
             default: pl("Stop"); lSpeed = rSpeed = 0.0;
         }//End Switch
 
-        if(plSpeed != lSpeed || prSpeed != rSpeed){
-            plSpeed = lSpeed; prSpeed = rSpeed;
+        //if(plSpeed != lSpeed || prSpeed != rSpeed){
+        //    plSpeed = lSpeed; prSpeed = rSpeed;
             trainDrive.driveLikeATank(lSpeed, rSpeed);
-        }
+        //}
     }//End driveForGoal
 
     private void strafeToScorePosition(){
@@ -110,17 +114,20 @@ public class Autonomous implements RobotMap{
 //TODO: Fork to position, and eject the ball
     }//End scoreTheGoal
     
-    private double getTheRange(PHREDSonic us){
-        double range;
-        int count = 0;
+    private double getTheRange(PHREDSonic us, double delay, boolean doAverage){
+        double avgRange = 0;
+        for(int i=9; i>0; i--){range[i]=range[i-1];}
         while(true){
-            count++;
-            us.ping();
-            if((range = us.getRangeMM())!= 0.0)break;
+            us.ping(delay);
+            if((range[0] = us.getRangeMM())!= 0.0)break;
         }
-        pl("count: " + count);
-        if(range > 3000.0) range = 3000.0;
-        return range;
+//        if(range[0] > 3000.0) range[0] = 3000.0;
+        pl("range: " + range[0]);
+        for(int i=0; i<10; i++){avgRange += range[i];}
+        if(doAverage)
+            return avgRange /= 10;
+        else
+            return range[0];
     }
 
     //I'm tired of typing System.out.println
