@@ -1,5 +1,6 @@
 
 package PHRED2014;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous implements RobotMap{
     
@@ -18,8 +19,10 @@ public class Autonomous implements RobotMap{
         trainDrive = td;
         
         stopRange = autoSpeedSettings[SCORE_RANGE_IDX - 1];
-        rangeTolerance = autoSpeedSettings[RANGE_TOLERANCE_IDX - 1];
-        turnSpeed = autoSpeedSettings[TURN_SPEED_IDX - 1];
+//        rangeTolerance = autoSpeedSettings[RANGE_TOLERANCE_IDX - 1];
+        rangeTolerance = 12.7;
+//        turnSpeed = autoSpeedSettings[TURN_SPEED_IDX - 1];
+        turnSpeed = 0.5;
         driveSpeed = autoSpeedSettings[DRIVE_SPEED_IDX - 1];
         
         if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
@@ -48,10 +51,14 @@ public class Autonomous implements RobotMap{
     
     //Methods
     public void driveForward(){
-        pl("Time: " + Utils.timeElapsed());
+        
+//        pl("Time: " + Utils.timeElapsed());
+        SmartDashboard.putNumber("Elapsed Time ", Utils.timeElapsed());
+
         
         rangeForward = getTheRange(usForward);
-        pl("Range  Forward: ", rangeForward);
+        SmartDashboard.putNumber("Range Forward: ", rangeForward);
+//        pl("Range  Forward: ", rangeForward);
 
 //        if(rangeForward > stopRange){driveForGoal(STRAIGHT);}
 //        else{driveForGoal(STOP);}

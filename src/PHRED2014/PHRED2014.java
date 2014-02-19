@@ -45,7 +45,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
         if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
-//TODO:        else{ObjMan.moveForks(-1.0, NO_PRESET);}
+        //else{ObjMan.moveForks(1.0, CF_SCORE);}
         switch(autoID){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
             case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
@@ -57,7 +57,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
     //This method is called once prior to teleop
     public void teleopInit(){
         trainDrive.InvertMecha();  
-       // ObjMan.deployForks();
     }
 
     // This method is called periodically during operator control
@@ -66,9 +65,9 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         trainDrive.MechaDrive();
         ObjMan.TankBelt(RStickY);
         ObjMan.VerticalFork(LStickY);
-        SmartDashboard.putNumber("RStrickY: ", COVOP.getXBoxAxisValue(RStickY));
-        SmartDashboard.putNumber("RStrickX: ", COVOP.getXBoxAxisValue(RStickX));
-        SmartDashboard.putNumber("Incoder", ObjMan.GetEncoder());
+        //SmartDashboard.putNumber("RStrickY: ", COVOP.getXBoxAxisValue(RStickY));
+        //SmartDashboard.putNumber("RStrickX: ", COVOP.getXBoxAxisValue(RStickX));
+        //SmartDashboard.putNumber("Incoder", ObjMan.GetEncoder());
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XA, CF_BOTTOM, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XY, CF_TOP, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XB, CF_MID, 1);
@@ -106,8 +105,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
          
          
          graph += (r.nextInt(3) - 1);
-         SmartDashboard.putInt("TEST OUTPUT", graph); // Hopefully this will be a cool graph
-         
-         
+         SmartDashboard.putNumber("TEST OUTPUT", graph); // Hopefully this will be a cool graph
     }
 }

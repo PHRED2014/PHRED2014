@@ -28,9 +28,9 @@ public class TrainDrive implements RobotMap{
         YJoy = COVOP.getJoyValue(YAxis)*Speed;
         ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
         
-        SmartDashboard.putNumber("XAxis", XJoy);
-        SmartDashboard.putNumber("YAxis", YJoy);
-        SmartDashboard.putNumber("ZAxis", ZJoy);
+//        SmartDashboard.putNumber("XAxis", XJoy);
+//        SmartDashboard.putNumber("YAxis", YJoy);
+//        SmartDashboard.putNumber("ZAxis", ZJoy);
         
         
         //driveMotors.mecanumDrive_Cartesian(-XJoy, 0, 0, 0);       

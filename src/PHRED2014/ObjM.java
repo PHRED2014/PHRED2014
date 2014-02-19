@@ -27,8 +27,6 @@ public class ObjM implements RobotMap{
         ForkDeploy = new Relay(FORK_SPIKE);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
- 
-        
         encoder = new Encoder(CODERI,CODERII);
         encoder.reset();
         encoder.start();
@@ -63,20 +61,22 @@ public class ObjM implements RobotMap{
     }
     
     public boolean prepTheRobot(){
-        deployArm(); Timer.delay(0.5);
-        deployForks(); Timer.delay(0.5);
+        deployArm();
+        deployForks();
+        moveForks(1.0, CF_SCORE);
+        Timer.delay(0.5);
         return true;
     }
 
     public void deployArm(){SmartDashboard.putString("Arm Status", "Deploying the arm");
         ArmDeploy.set(Relay.Value.kForward);
-        Timer.delay(1.0);
-        ArmDeploy.set(Relay.Value.kReverse);
+        Timer.delay(0.5);
+//        ArmDeploy.set(Relay.Value.kReverse);
     }
     public void deployForks(){SmartDashboard.putString("Fork Status: ","Deploying the forks");
         ForkDeploy.set(Relay.Value.kForward);
-        Timer.delay(1.0);
-        ForkDeploy.set(Relay.Value.kReverse);
+        Timer.delay(0.5);
+//        ForkDeploy.set(Relay.Value.kReverse);
     }
     public void moveForks(double speed, int preset){
         String bob = "EXCEPTION";
@@ -105,7 +105,7 @@ public class ObjM implements RobotMap{
         }
         
         ForkMotor.set(speed);
-        pl("Moving the forks");
+//        pl("Moving the forks");
         SmartDashboard.putString("Fork Status: ", bob);
     }
     
@@ -131,6 +131,6 @@ public class ObjM implements RobotMap{
     
     //I'm tired of typing System.out.println You could just use smartDashboard :|
     public void pl(String s){System.out.println(s); SmartDashboard.putString(s, s);}
-    public void pl(String s, int i){System.out.println(s + i); SmartDashboard.putInt(s, i);}
+    public void pl(String s, int i){System.out.println(s + i); SmartDashboard.putNumber(s, i);}
     public void pl(String s, double d){System.out.println(s + d); SmartDashboard.putNumber(s, d);}
 }
