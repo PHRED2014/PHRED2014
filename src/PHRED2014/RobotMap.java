@@ -26,7 +26,6 @@ public interface RobotMap {
     public final static int FRONT_ULTRA_P = 9;
     public final static int FRONT_ULTRA_E = 10;
 
-//Relays
 //PWM
     public final static int LEFT_FRONT_MOTOR = 1; //Train drive motors
     public final static int LEFT_REAR_MOTOR = 2;

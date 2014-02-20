@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -19,6 +20,7 @@ public class PHREDSonic {
 
     private static final double pingTime = 10 * 1e-6;
     private static final double sosMMPerSec = 1130.0 * 12.0 * 25.4;
+    private static double delay = 0.10;
     private DigitalInput echoChannel = null;
     private DigitalOutput pingChannel = null;
     private Counter counter = null;
@@ -34,8 +36,12 @@ public class PHREDSonic {
         counter.reset();
         counter.start();
     }
+    
+    public void setDelay(double d){
+        delay = d;
+    }
 
-    public void ping(double delay) {
+    public void ping() {
         counter.reset();             
         pingChannel.pulse(pingTime); 
         Timer.delay(delay);
@@ -43,7 +49,7 @@ public class PHREDSonic {
 
     public double getRangeMM() {
         if (counter.get() > 1){
-            //System.out.println("period: " + counter.getPeriod());
+            SmartDashboard.putNumber("PHREDSonic period", counter.getPeriod());
             return counter.getPeriod() * sosMMPerSec / 2.0;
         }
         else{return 0;}

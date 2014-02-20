@@ -17,7 +17,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     int autoID;
     double[] autoSpeedSettings;
-    boolean robotPrepped = false;
 
     // This method is run when the robot is first started    
     public void robotInit() {
@@ -37,8 +36,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
-//TODO:        else{ObjMan.moveForks(-1.0, NO_PRESET);}
         switch(autoID){
             case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
             case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
@@ -54,10 +51,10 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
-        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
         trainDrive.MechaDrive();
-        //ObjMan.TankBelt();
-        //ObjMan.VerticalFork();
+        ObjMan.moveBelt();
+        ObjMan.moveForks();
+        ObjMan.moveArm();
     }
     
     // This function is called periodically during test mode
