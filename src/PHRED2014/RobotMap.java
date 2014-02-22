@@ -35,9 +35,9 @@ public interface RobotMap {
     public final static double BELT_SPEED = 1.0;
     public final static double DRIVE_MOTOR_MOD = 1.0;
 
-    public final static int Forkport = 10;//TODO: Used for ProtoBot.  Remove for CompBot
-    public final static int Armport = 9;
-    public final static int Beltport = 8;
+    public final static int Forkport = 6;
+    public final static int Armport = 8;
+    public final static int Beltport = 10;
 
 /* -- OI VARIABLES -- */
 // Joystick DS Ports
@@ -63,7 +63,7 @@ public interface RobotMap {
     public final static int RStickY = 5;
     public final static int DPadX = 6;
     
-    public final static double DeadZone = 0.05;
+    public final static double DeadZone = 0.10;
     
 /* -- AUTONOMOUS CONTSTANTS -- */
     

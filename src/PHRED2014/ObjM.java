@@ -21,7 +21,9 @@ public class ObjM implements RobotMap{
     
     //Methods
     public void moveForks(){ // Forklift up and down
-        ForkMotor.set(COVOP.getXBoxAxisValue(LStickY));
+        double speed = COVOP.getXBoxAxisValue(LStickY);
+        if(Math.abs(speed) <= DeadZone) speed = 0.0;
+        ForkMotor.set(speed);
     }
         
     public void moveBelt(){ // Belt movement (It looks like a tank)
@@ -38,6 +40,8 @@ public class ObjM implements RobotMap{
     }
 
     public void moveArm(){
-        ArmMotor.set(COVOP.getXBoxAxisValue(RStickY));
+        double speed = COVOP.getXBoxAxisValue(RStickY);
+        if(Math.abs(speed) <= DeadZone) speed = 0.0;
+        ArmMotor.set(speed);
     }
 }
