@@ -94,12 +94,14 @@ public interface RobotMap {
     public final static int STRAIGHT = 1;
     public final static int TURN_LEFT = 2;
     public final static int TURN_RIGHT = 3;
+    public final static int MECANUM_LEFT = 4;
+    public final static int MECANUM_RIGHT = 5;
     
     public final static double RANGE_DIFF_LIMIT = 25.4/2; // ~1/2 inch
-    public final static int DRIVE_SPEED_IDX = 1;
-    public final static int TURN_SPEED_IDX = 2;
-    public final static int RANGE_TOLERANCE_IDX = 3;
-    public final static int SCORE_RANGE_IDX = 4;
+    public final static int FL_DRIVE_SPEED_IDX = 1; //First Leg Drive Speed
+    public final static int FL_RANGE_TO_GOAL_IDX = 2;
+    public final static int SL_DRIVE_SPEED_IDX = 3;
+    public final static int SL_RANGE_TO_GOAL_IDX = 4;
     
     public final static int NO_PRESET = -1;
      

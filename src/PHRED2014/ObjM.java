@@ -49,17 +49,16 @@ public class ObjM implements RobotMap{
         }
     }
 
-    //Prepare the robot for competition
     public int GetEncoder(){
         int encodercount = encoder.get();
         return encodercount;
     }
-    
+
+    //Prepare the robot for competition
     public boolean prepTheRobot(){
         deployArm();
         deployForks();
-        moveForks(1.0, CF_SCORE);
-        Timer.delay(0.5);
+        moveForks(); Timer.delay(0.5);
         return true;
     }
 
@@ -103,6 +102,7 @@ public class ObjM implements RobotMap{
     private int checkPreset(int p){
         int loc = encoder.get();
         
+        //Create a deadzone around the preset of +/- 1/16"
         if((loc > p - 5) && (loc < p + 5))
             loc = p;
         return loc;
@@ -126,6 +126,32 @@ public class ObjM implements RobotMap{
         if((!COVOP.getXBoxButton(down) && !COVOP.getXBoxButton(up)) || (COVOP.getXBoxButton(down) && COVOP.getXBoxButton(up))){
             moveForks(0, NO_PRESET);
         }
+    }
+    
+//*** Methods used for autonomous.
+    //Override of TankBelt. Used for autonomous
+    public void TankBelt(){
+        BeltMotor.set(Relay.Value.kForward);
+    }
+    
+    //Override of moveForks. Used for autonomous.
+    public boolean moveForks(){
+        String bob = "EXCEPTION";
+        
+        if(checkPreset(CF_SCORE) == CF_SCORE){
+            bob = "At the preset";
+            ForkMotor.set(0.0);
+            return true;
+        }else if(checkPreset(CF_SCORE) < CF_SCORE){
+            bob = "Moving the Forks Up";
+            ForkMotor.set(1.0);
+        }else{ 
+            bob = "Moving the Forks Down";
+            ForkMotor.set(-1.0);
+        }
+
+        pl("Fork Status: ", bob);
+        return false;
     }
     
     //I'm tired of typing System.out.println You could just use smartDashboard :|

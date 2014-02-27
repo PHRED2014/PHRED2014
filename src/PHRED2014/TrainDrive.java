@@ -13,15 +13,18 @@ public class TrainDrive implements RobotMap{
     private OI COVOP;
     private double Speed = DRIVE_MOTOR_MOD;
     
+    private boolean mechaInverted;
+    
     //Contructor(s)
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(LEFT_FRONT_MOTOR, LEFT_REAR_MOTOR, 
                                       RIGHT_FRONT_MOTOR, RIGHT_REAR_MOTOR);
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
+         mechaInverted = false;
   }
     
-    //Methods(functions)
+//** Methods
     public void MechaDrive(){
         Speed = COVOP.SpeedJar(Speed);
         XJoy = COVOP.getJoyValue(XAxis)*Speed;
@@ -32,25 +35,31 @@ public class TrainDrive implements RobotMap{
 //        SmartDashboard.putNumber("YAxis", YJoy);
 //        SmartDashboard.putNumber("ZAxis", ZJoy);
         
-        
-        //driveMotors.mecanumDrive_Cartesian(-XJoy, 0, 0, 0);       
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
-        
         SmartDashboard.putNumber("ORCA Effeciency", Speed);
     }
     
-    public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous
+    public void InvertMecha(){
+       if(!mechaInverted){
+           driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+           driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+       }
+       mechaInverted = true;
+    }
+
+//*** Methods used for autonomous.
+    //Overide MechaDrive for use with autonomous
+    public void MechaDrive(double x,double y,double z){
+        if(!mechaInverted) InvertMecha();
+        driveMotors.mecanumDrive_Cartesian(x, y, z, 0);
+    }
+    
+    //Used for atonomous
+    public void driveLikeATank(double leftSpeed, double rightSpeed){
         driveMotors.tankDrive(leftSpeed, rightSpeed);
     }
     
-    public void InvertMecha(){
-       driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-       driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-        
-        //driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-       // driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-    }
-    
+//** Methods used for test    
     public void BoxDrive(){
         Speed = COVOP.SpeedJar(Speed);
         XJoy = COVOP.getXBoxAxisValue(LStickX)*Speed;

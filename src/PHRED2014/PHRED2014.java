@@ -13,44 +13,47 @@ import java.util.Random; // --! THIS IS FOR THE TEST FUNCTION. NOT ACTUAL ROBOT.
 
 public class PHRED2014 extends IterativeRobot implements RobotMap{    
     //Create Object References
-    TrainDrive trainDrive;
-    ObjM ObjMan;
-    OI COVOP;
-    Autonomous auto;
+    TrainDrive trainDrive = null;
+    ObjM ObjMan = null;
+    OI COVOP = null;
+    Autonomous auto = null;
     
     Random r = new Random(); // !-- THIS IS FOR TEST FUNCTION --! 
     int graph = 5; // !-- SO IS THIS --!
     boolean invert = false; // !-- AND THIS --!
 
-    int autoID;
+    int autoID = 0;
     double[] autoSpeedSettings;
     boolean robotPrepped = false;
 
     // This method is run when the robot is first started    
     public void robotInit() {
         //Instantiate the hardware objects
-        COVOP = new OI();
-        trainDrive = new TrainDrive(COVOP);
-        ObjMan = new ObjM(COVOP);
+        if(COVOP == null)COVOP = new OI();
+        if(trainDrive == null)trainDrive = new TrainDrive(COVOP);
+        if(ObjMan == null)ObjMan = new ObjM(COVOP);
+        if(auto == null)auto = new Autonomous(trainDrive, ObjMan);
     }
 
     // This method is called once prior to autonomous
     public void autonomousInit(){
-        //Instantiate the autonomous object
         autoID = COVOP.getAutoID();
         autoSpeedSettings = COVOP.getAutoSpeedSettings();
-        auto = new Autonomous(trainDrive, autoID, autoSpeedSettings);
+        auto.initialize(autoID, autoSpeedSettings);
     }
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
-        //else{ObjMan.moveForks(1.0, CF_SCORE);}
-        switch(autoID){
-            case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
-            case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
-            case CENTER: auto.driveForward();break;
-            default: break;
+        if(!robotPrepped){
+            robotPrepped = ObjMan.prepTheRobot();
+        }else{
+            ObjMan.moveForks();
+            switch(autoID){
+                case WALL_LEFT: auto.scoreAGoal(WALL_LEFT); break;
+                case WALL_RIGHT: auto.scoreAGoal(WALL_RIGHT);break;
+                case CENTER: auto.driveForward();break;
+                default: break;
+            }
         }
     }
 
@@ -61,7 +64,10 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
-        if(!robotPrepped){robotPrepped = ObjMan.prepTheRobot();}
+        if(!robotPrepped){
+            robotPrepped = ObjMan.prepTheRobot();
+        }
+        
         trainDrive.MechaDrive();
         ObjMan.TankBelt(RStickY);
         ObjMan.VerticalFork(LStickY);
@@ -72,11 +78,6 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XY, CF_TOP, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XB, CF_MID, 1);
         ObjMan.Move_to_the_preset_values_that_we_determined_at_a_previous_time_(XX, CF_SCORE, 1);
-        
-//        if (COVOP.getXBoxButton(XA))
-//        {
-//            SmartDashboard.putString("flagella: ", "seventy seven");
-//        }
     }
     
     // This function is called periodically during test mode

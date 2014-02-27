@@ -71,11 +71,11 @@ public class OI implements RobotMap{
     }
     
     public double[] getAutoSpeedSettings(){
-        double[] as = {0.0,0.0,0.0,0.0};
-        as[0] = driverStation.getAnalogIn(DRIVE_SPEED_IDX)/5;
-        as[1] = driverStation.getAnalogIn(TURN_SPEED_IDX)/5;
-        as[2] = Utils.round(driverStation.getAnalogIn(RANGE_TOLERANCE_IDX)*10);
-        as[3] = Utils.round(driverStation.getAnalogIn(SCORE_RANGE_IDX)*600);
+        double as[] = new double[4];
+        as[0] = driverStation.getAnalogIn(FL_DRIVE_SPEED_IDX)/5;//0 to 1
+        as[1] = driverStation.getAnalogIn(FL_RANGE_TO_GOAL_IDX)*600;//0 to 3000
+        as[2] = driverStation.getAnalogIn(SL_DRIVE_SPEED_IDX)/5;
+        as[3] = driverStation.getAnalogIn(SL_RANGE_TO_GOAL_IDX)*600;
         return as;
     }
     
