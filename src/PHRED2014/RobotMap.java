@@ -9,6 +9,8 @@ public interface RobotMap {
 /* -- SIDECAR PORT MAPPINGS -- */
     
 //Analog
+    public final static int FORK_LIMIT = 1;
+    public final static int ARM_LIMIT = 2;
     
 //Digital
     public final static int LEFT_FRONT_ULTRA_P = 1; //Ultrasonic Sensors
@@ -77,7 +79,7 @@ public interface RobotMap {
     public final static int XY = 4;
     public final static int BumperL = 5;
     public final static int BumperR = 6;
-    public final static int Back = 7;
+    public final static int Select = 7;
     public final static int Start = 8;
     public final static int JoyPressL = 9;
     public final static int JoyPressR = 10;

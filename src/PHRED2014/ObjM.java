@@ -15,6 +15,10 @@ public class ObjM implements RobotMap{
     private Encoder encoder;
     private DigitalInput topLimit;
     private DigitalInput botLimit;
+    private AnalogChannel forkLimit;
+    private AnalogChannel armLimit;
+    
+    private boolean exit;
     
     //Constructor(s)
     public ObjM(OI oi){
@@ -26,9 +30,13 @@ public class ObjM implements RobotMap{
         ForkDeploy = new Relay(FORK_SPIKE);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
         botLimit = new DigitalInput(BOT_LIMIT); //bottom limit
+        forkLimit = new AnalogChannel(FORK_LIMIT);
+        armLimit = new AnalogChannel(ARM_LIMIT);
         encoder = new Encoder(CODERI,CODERII);
         encoder.reset();
         encoder.start();
+        
+        exit = false;
     }
     
     //Methods
@@ -58,18 +66,18 @@ public class ObjM implements RobotMap{
     public boolean prepTheRobot(){
         deployArm();
         deployForks();
-        moveForks(); Timer.delay(0.5);
+        moveForks();
         return true;
     }
 
     public void deployArm(){pl("Arm Status", "Deploying the arm");
         ArmDeploy.set(Relay.Value.kForward);
-        Timer.delay(0.5);
     }
+    
     public void deployForks(){pl("Fork Status: ","Deploying the forks");
         ForkDeploy.set(Relay.Value.kForward);
-        Timer.delay(0.5);
     }
+    
     public void moveForks(double speed, int preset){
         String bob = "EXCEPTION";
         if(!botLimit.get() && speed > 0){ //Bot Limit switch tripped and pushing down on JS
@@ -93,6 +101,10 @@ public class ObjM implements RobotMap{
             bob = "Not Moving the forks";
         }else {
             bob = "Not Moving the Forks";
+        }
+        
+        if(CarrageSafety(Select, Start) == true){
+            speed = 0;
         }
         
         ForkMotor.set(speed);
@@ -135,28 +147,57 @@ public class ObjM implements RobotMap{
     }
     
     //Override of moveForks. Used for autonomous.
-    public boolean moveForks(){
+    public boolean moveForks(){ 
+        double speed = 0.0;
         String bob = "EXCEPTION";
         
         if(checkPreset(CF_SCORE) == CF_SCORE){
             bob = "At the preset";
-            ForkMotor.set(0.0);
+            speed = 0.0;
             return true;
         }else if(checkPreset(CF_SCORE) < CF_SCORE){
             bob = "Moving the Forks Up";
-            ForkMotor.set(1.0);
+            speed = 1.0;
         }else{ 
             bob = "Moving the Forks Down";
-            ForkMotor.set(-1.0);
+            speed = -1.0;
+        }
+        
+        if(CarrageSafety(Select, Start) == true){
+            speed = 0;
         }
 
+        ForkMotor.set(speed);
         pl("Fork Status: ", bob);
         return false;
     }
     
+     public boolean CarrageSafety(int button1, int button2){
+        boolean bool = false; // false = MOVE. true = NO MOVE.
+        
+        if(exit){
+            SmartDashboard.putBoolean("Carrage Safety", exit);
+            return false;
+        }
+        
+        if(COVOP.getXBoxButton(button1) && COVOP.getXBoxButton(button2)){
+            bool = false;
+            exit = true;
+        }
+        else if(forkLimit.getVoltage() > 1.000 || armLimit.getVoltage() > 1.000) {
+            bool = true;
+        }
+        
+        SmartDashboard.putBoolean("Carrage Safety", exit);
+        SmartDashboard.putBoolean("Carrage Limit Switches", bool);
+        return bool;
+    }
+
     //I'm tired of typing System.out.println You could just use smartDashboard :|
     public void pl(String s){System.out.println(s); SmartDashboard.putString(s, s);}
     public void pl(String s1, String s2){System.out.println(s1 + s2); SmartDashboard.putString(s1, s2);}
     public void pl(String s, int i){System.out.println(s + i); SmartDashboard.putNumber(s, i);}
     public void pl(String s, double d){System.out.println(s + d); SmartDashboard.putNumber(s, d);}
+
+
 }

@@ -97,8 +97,15 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
          
          ObjMan.TankBelt(Trigger);
          
-         trainDrive.MechaDrive();
          trainDrive.BoxDrive();
+         
+         if(COVOP.getJoyValue(XAxis) > DeadZone || COVOP.getJoyValue(YAxis) > DeadZone || COVOP.getJoyValue(ZAxis) > DeadZone){
+             trainDrive.MechaDrive();
+         }
+         
+         if(COVOP.getXBoxAxisValue(LStickX) > DeadZone || COVOP.getXBoxAxisValue(LStickY) > DeadZone || COVOP.getXBoxAxisValue(RStickX) > DeadZone || COVOP.getXBoxAxisValue(RStickY) > DeadZone){
+             trainDrive.BoxDrive();
+         }
          
          ObjMan.XFork(BumperL, BumperR);
          
