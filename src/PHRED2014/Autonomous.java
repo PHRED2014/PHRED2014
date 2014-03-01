@@ -13,7 +13,8 @@ public class Autonomous implements RobotMap{
     private PHREDSonic usForward = null;
 
     private double rangeFore, rangeAft, rangeDiff, endOfFirstLeg, endOfSecondLeg,
-            rangeTolerance, turnSpeed, flDriveSpeed, slDriveSpeed, rangeForward = 0.0;
+            rangeTolerance, turnSpeed, flDriveSpeed, slDriveSpeed, rangeForward,
+            timeOut = 0.0;
     
     private boolean firstLeg;
     
@@ -50,21 +51,23 @@ public class Autonomous implements RobotMap{
             }
             case CENTER:
             default:
-                endOfFirstLeg = 3000;// ~10 feet
+                Utils.timeReset();
+                Utils.timeStart();
+                flDriveSpeed = -0.5;//Initialize to first leg drive speed
+                timeOut = 3.0; //Seconds
+//                endOfFirstLeg = 3000;// ~10 feet
                 break;
         }//End switch
+
     }//End autoInit
     
     public void driveForward(){
-        rangeForward = getTheRange(usForward);
- 
-        if(rangeForward > endOfFirstLeg)
+        if(Utils.timeElapsed() < timeOut)
             driveForGoal(STRAIGHT);
         else
             driveForGoal(STOP);
         
         pl("Elapsed Time ", Utils.timeElapsed());
-        pl("Range Forward: ", rangeForward);
     }
     
     public void scoreAGoal(int script){
@@ -147,7 +150,7 @@ public class Autonomous implements RobotMap{
     private double getTheRange(PHREDSonic us){
         double range = 0.0;
         double maxRange = 4500; //~15 Feet
-        double timeOut = 0.010;
+        timeOut = 0.010;
         
         us.ping();
         Utils.timeReset();
