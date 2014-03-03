@@ -190,6 +190,8 @@ public class ObjM implements RobotMap{
         
         SmartDashboard.putBoolean("Carrage Safety", exit);
         SmartDashboard.putBoolean("Carrage Limit Switches", bool);
+        SmartDashboard.putNumber("Fork Limit Voltages", forkLimit.getVoltage());
+        SmartDashboard.putNumber("Arm Limit Voltages", armLimit.getVoltage());
         return bool;
     }
 
