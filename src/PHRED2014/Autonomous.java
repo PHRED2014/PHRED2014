@@ -54,7 +54,7 @@ public class Autonomous implements RobotMap{
                 Utils.timeReset();
                 Utils.timeStart();
                 flDriveSpeed = -0.5;//Initialize to first leg drive speed
-                timeOut = 3.0; //Seconds
+                timeOut = 5.0; //Seconds
 //                endOfFirstLeg = 3000;// ~10 feet
                 break;
         }//End switch

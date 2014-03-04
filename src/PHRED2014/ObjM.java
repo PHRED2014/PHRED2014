@@ -67,6 +67,7 @@ public class ObjM implements RobotMap{
         deployArm();
         deployForks();
         moveForks();
+        Timer.delay(1.0);
         return true;
     }
 
@@ -158,7 +159,7 @@ public class ObjM implements RobotMap{
         }else if(checkPreset(CF_SCORE) < CF_SCORE){
             bob = "Moving the Forks Up";
             speed = 1.0;
-        }else{ 
+        }else if(checkPreset(CF_SCORE) > CF_SCORE){
             bob = "Moving the Forks Down";
             speed = -1.0;
         }
