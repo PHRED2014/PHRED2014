@@ -9,7 +9,8 @@ public class ObjM implements RobotMap{
     private OI COVOP;
     
     private Victor ForkMotor;
-    private Relay BeltMotor;
+    private Relay BeltMotor; //Use for relay
+    //private Victor BeltMotor; //Use for Victor Controller
     private Relay ForkDeploy;
     private Relay ArmDeploy;
     private Encoder encoder;
@@ -25,7 +26,8 @@ public class ObjM implements RobotMap{
         COVOP = oi;
         
         ForkMotor = new Victor(FORK_MOTOR);
-        BeltMotor = new Relay(BELT_SPIKE); //IT IS NOT PWMIII FIND OUT WHAT IT IS ASAP
+        BeltMotor = new Relay(BELT_SPIKE); //Use for relay
+        //BeltMotor = new Victor(BELT_MOTOR); //Use for Victor Controller
         ArmDeploy = new Relay(ARM_SPIKE);//it controls the one-time deployment solenoid of the Belt. Dunno the port
         ForkDeploy = new Relay(FORK_SPIKE);//it controls the one-time deployment solenoid of the Forks. Dunno the port
         topLimit = new DigitalInput(TOP_LIMIT); //top limit
@@ -47,13 +49,16 @@ public class ObjM implements RobotMap{
     public void TankBelt(int axis){ // Belt movement (It looks like a tank)
              
         if(COVOP.getXBoxAxisValue(axis) > DeadZone){
-            BeltMotor.set(Relay.Value.kForward);
+            BeltMotor.set(Relay.Value.kForward); //Use for relay
+            //BeltMotor.set(1.0); //Use for Victor controller
         }
         if(COVOP.getXBoxAxisValue(axis) < -DeadZone){
-            BeltMotor.set(Relay.Value.kReverse);
+            BeltMotor.set(Relay.Value.kReverse); //Use for relay
+            //BeltMotor.set(0.5); //Use for Victor controller
         }
         if(COVOP.getXBoxAxisValue(axis) < DeadZone && COVOP.getXBoxAxisValue(axis) > -DeadZone){
-            BeltMotor.set(Relay.Value.kOff);
+            BeltMotor.set(Relay.Value.kOff); //Use for relay
+            //BeltMotor.set(0.0); //Use for Victor controller
         }
     }
 

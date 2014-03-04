@@ -44,6 +44,7 @@ public interface RobotMap {
     public final static int LEFT_REAR_MOTOR = 2;
     public final static int RIGHT_FRONT_MOTOR = 3;
     public final static int RIGHT_REAR_MOTOR = 4;
+    public final static int BELT_MOTOR = 5;
     public final static int FORK_MOTOR = 8; //Need to verify this setting
     
     public final static double BELT_SPEED = 1.0;
