@@ -30,6 +30,7 @@ public class TrainDrive implements RobotMap{
         XJoy = COVOP.getJoyValue(XAxis)*Speed;
         YJoy = COVOP.getJoyValue(YAxis)*Speed;
         ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
+        ZJoy = Utils.power(ZJoy, 2);//Square the turn speed
         
 //        SmartDashboard.putNumber("XAxis", XJoy);
 //        SmartDashboard.putNumber("YAxis", YJoy);

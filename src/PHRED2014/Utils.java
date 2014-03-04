@@ -22,12 +22,21 @@ public class Utils{
     public static void timeStart(){startTime = System.currentTimeMillis(); running = true;}
     public static void timeStop(){running = false;}
     public static double timeElapsed(){
-        if(!running) return elapsedTime;
-        else return elapsedTime = (System.currentTimeMillis() - startTime)/1000;
+        if(running) elapsedTime = (System.currentTimeMillis() - startTime)/1000;
+        return elapsedTime;
     }
     
     public static int round(double n){
         if ((n % 1) >= 0.5) n++;
         return (int)(n - (n % 1));
     }//End round
+    
+    //
+    public static double power(double d, int p){
+        double dd = 1;
+        
+        if(p != 0)
+            for(int i = 1; i <= p; i++){dd *= d;}
+        return dd;
+    }//End power
 }
