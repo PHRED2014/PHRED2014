@@ -150,6 +150,7 @@ public class ObjM implements RobotMap{
     //Override of TankBelt. Used for autonomous
     public void TankBelt(){
         BeltMotor.set(Relay.Value.kForward);
+        //BeltMotor.set(1.0); //Use for Victor controller
     }
     
     //Override of moveForks. Used for autonomous.
