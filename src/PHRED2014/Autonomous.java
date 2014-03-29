@@ -34,7 +34,7 @@ public class Autonomous implements RobotMap{
 
         rangeTolerance = 12.7; //The allowable difference in range between the two side ultrasonic sensors
         turnSpeed = 0.5; //The 
-
+//
         firstLeg = true;
         
         if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
@@ -132,7 +132,7 @@ public class Autonomous implements RobotMap{
                                pl("Turn Right"); break;
             case STRAIGHT:     trainDrive.driveLikeATank(flDriveSpeed, flDriveSpeed);
                                pl("Drive Straight"); break;
-   /*         case MECANUM_LEFT: trainDrive.MechaDrive(slDriveSpeed, slDriveSpeed, 0.0);
+   /*       case MECANUM_LEFT: trainDrive.MechaDrive(slDriveSpeed, slDriveSpeed, 0.0);
                                pl("Mecanum Left"); break;
             case MECANUM_RIGHT:trainDrive.MechaDrive(-slDriveSpeed, slDriveSpeed, 0.0);
                                pl("Mecanum Right"); break;
