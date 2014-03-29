@@ -33,7 +33,7 @@ public interface RobotMap {
     public final static int RIGHT_REAR_MOTOR = 4;
     
     public final static double BELT_SPEED = 1.0;
-    public final static double DRIVE_MOTOR_MOD = 1.0;
+    public final static double DRIVE_MOTOR_MOD = 0.75;
 
     public final static int Forkport = 6;
     public final static int Armport = 8;

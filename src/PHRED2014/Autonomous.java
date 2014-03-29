@@ -1,7 +1,6 @@
 
 package PHRED2014;
 
-import edu.wpi.first.wpilibj.image.NIVision;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous implements RobotMap{

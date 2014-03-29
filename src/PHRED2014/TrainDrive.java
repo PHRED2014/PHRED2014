@@ -7,11 +7,11 @@ public class TrainDrive implements RobotMap{
     
     //Instance variables: motors, sensors, etc.
     private RobotDrive driveMotors;
-    private double XJoy = 0;
-    private double YJoy = 0;
-    private double ZJoy = 0;
+    private double xPrevSpeed, XJoy = 0;
+    private double yPrevSpeed, YJoy = 0;
+    private double zPrevSpeed, ZJoy = 0;
     private OI COVOP;
-    private double Speed = DRIVE_MOTOR_MOD;
+    private double speedAdj = DRIVE_MOTOR_MOD;
     
     //Contructor(s)
     public TrainDrive(OI oi){
@@ -23,14 +23,20 @@ public class TrainDrive implements RobotMap{
     
     //Methods(functions)
     public void MechaDrive(){
-        Speed = COVOP.SpeedJar(Speed);
-        XJoy = COVOP.getJoyValue(XAxis)*Speed;
-        YJoy = COVOP.getJoyValue(YAxis)*Speed;
-        ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
+        
+        xPrevSpeed = XJoy = setSpeed(COVOP.getJoyValue(XAxis), xPrevSpeed) * speedAdj;
+        yPrevSpeed = YJoy = setSpeed(COVOP.getJoyValue(YAxis), yPrevSpeed) * speedAdj;
+        zPrevSpeed = ZJoy = setSpeed(COVOP.getJoyValue(ZAxis), zPrevSpeed) * speedAdj;
+        
+        //if(ZJoy < 0)
+        //    ZJoy = ZJoy * ZJoy * -1;
+        //else
+        //    ZJoy = ZJoy * ZJoy;
+        
         
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
         
-        SmartDashboard.putNumber("ORCA Effeciency", Speed);
+        SmartDashboard.putNumber("ORCA Effeciency", speedAdj);
     }
     
     public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous
@@ -40,5 +46,26 @@ public class TrainDrive implements RobotMap{
     public void InvertMecha(){
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+    }
+    
+    private double setSpeed(double cs, double ps){
+        double ms;
+        int ss = 1;
+        double maxSpeedIncrease = 0.20;
+        
+        if(cs < 0)
+            ss = -1;
+
+        //TODO: Handle a change from positive to negative or viceversa 
+
+        cs = Math.abs(cs);
+        ps = Math.abs(ps);
+
+        if(cs == 0 || cs <= ps || ps + maxSpeedIncrease > cs)
+            ms = cs;
+        else
+            ms = ps + maxSpeedIncrease;
+         
+        return ms * ss;
     }
 }
