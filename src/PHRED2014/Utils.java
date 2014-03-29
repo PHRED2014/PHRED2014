@@ -30,4 +30,12 @@ public class Utils{
         if ((n % 1) >= 0.5) n++;
         return (int)(n - (n % 1));
     }//End round
+    
+    public static double power(double d, int p){
+        double dd = 1;
+        
+        if(p != 0)
+            for(int i = 1; i <= p; i++){dd *= d;}
+        return dd;
+    }//End power
 }

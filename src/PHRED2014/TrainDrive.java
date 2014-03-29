@@ -28,10 +28,10 @@ public class TrainDrive implements RobotMap{
         yPrevSpeed = YJoy = setSpeed(COVOP.getJoyValue(YAxis), yPrevSpeed) * speedAdj;
         zPrevSpeed = ZJoy = setSpeed(COVOP.getJoyValue(ZAxis), zPrevSpeed) * speedAdj;
         
-        //if(ZJoy < 0)
-        //    ZJoy = ZJoy * ZJoy * -1;
-        //else
-        //    ZJoy = ZJoy * ZJoy;
+        if(ZJoy < 0)
+            ZJoy = Utils.power(ZJoy, 2) * -1;
+        else
+            ZJoy = Utils.power(ZJoy, 2);
         
         
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
