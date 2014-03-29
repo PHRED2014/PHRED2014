@@ -44,17 +44,18 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
-        if(!robotPrepped){
-            robotPrepped = ObjMan.prepTheRobot();
-        }else{
-            ObjMan.moveForks();
-            switch(autoID){
-                case WALL_LEFT: auto.scoreAGoal(WALL_LEFT); break;
-                case WALL_RIGHT: auto.scoreAGoal(WALL_RIGHT);break;
-                case CENTER: auto.driveForward();break;
-                default: break;
-            }
+//        if(!robotPrepped){
+//            robotPrepped = ObjMan.prepTheRobot();
+//        }else{
+//            ObjMan.moveForks();
+        switch(autoID){
+            case WALL_LEFT: auto.scoreAGoal(WALL_LEFT); break;
+            case WALL_RIGHT: auto.scoreAGoal(WALL_RIGHT);break;
+            case CENTER: auto.driveForward();break;
+            case DO_NOTHING:
+            default: break;
         }
+//        }
     }
 
     //This method is called once prior to teleop
@@ -64,9 +65,9 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called periodically during operator control
     public void teleopPeriodic() {
-        if(!robotPrepped){
-            robotPrepped = ObjMan.prepTheRobot();
-        }
+//        if(!robotPrepped){
+//            robotPrepped = ObjMan.prepTheRobot();
+//        }
         
         trainDrive.MechaDrive();
         ObjMan.TankBelt(RStickY);

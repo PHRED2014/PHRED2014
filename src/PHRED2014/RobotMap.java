@@ -92,6 +92,7 @@ public interface RobotMap {
     public final static int CENTER = 1;
     public final static int WALL_LEFT = 2;
     public final static int WALL_RIGHT = 3;
+    public final static int DO_NOTHING = 4;
     
     public final static int STOP = 0;
     public final static int STRAIGHT = 1;

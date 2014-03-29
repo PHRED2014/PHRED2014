@@ -71,7 +71,7 @@ public class ObjM implements RobotMap{
     public boolean prepTheRobot(){
         deployArm();
         deployForks();
-        moveForks();
+//        moveForks();
         Timer.delay(1.0);
         return true;
     }
