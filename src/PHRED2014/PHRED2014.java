@@ -28,20 +28,25 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
 
     // This method is called once prior to autonomous
     public void autonomousInit(){
-        //Instantiate the autonomous object
         autoID = COVOP.getAutoID();
         autoSpeedSettings = COVOP.getAutoSpeedSettings();
-        auto = new Autonomous(trainDrive, autoID, autoSpeedSettings);
+        auto.initialize(autoID, autoSpeedSettings);
     }
 
     // This method is called periodically during autonomous
     public void autonomousPeriodic() {
+//        if(!robotPrepped){
+//            robotPrepped = ObjMan.prepTheRobot();
+//        }else{
+//            ObjMan.moveForks();
         switch(autoID){
-            case WALL_LEFT: auto.scrapeTheWall(WALL_LEFT); break;
-            case WALL_RIGHT: auto.scrapeTheWall(WALL_RIGHT);break;
+            case WALL_LEFT: auto.scoreAGoal(WALL_LEFT); break;
+            case WALL_RIGHT: auto.scoreAGoal(WALL_RIGHT);break;
             case CENTER: auto.driveForward();break;
+            case DO_NOTHING:
             default: break;
         }
+//        }
     }
 
     //This method is called once prior to teleop
