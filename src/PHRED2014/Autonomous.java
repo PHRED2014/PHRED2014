@@ -132,10 +132,11 @@ public class Autonomous implements RobotMap{
                                pl("Turn Right"); break;
             case STRAIGHT:     trainDrive.driveLikeATank(flDriveSpeed, flDriveSpeed);
                                pl("Drive Straight"); break;
-            case MECANUM_LEFT: trainDrive.MechaDrive(slDriveSpeed, slDriveSpeed, 0.0);
+   /*         case MECANUM_LEFT: trainDrive.MechaDrive(slDriveSpeed, slDriveSpeed, 0.0);
                                pl("Mecanum Left"); break;
             case MECANUM_RIGHT:trainDrive.MechaDrive(-slDriveSpeed, slDriveSpeed, 0.0);
                                pl("Mecanum Right"); break;
+   */
             case STOP:
             default:           trainDrive.driveLikeATank(0.0, 0.0);
                                pl("Stop"); break;

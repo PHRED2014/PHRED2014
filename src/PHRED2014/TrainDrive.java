@@ -7,13 +7,11 @@ public class TrainDrive implements RobotMap{
     
     //Instance variables: motors, sensors, etc.
     private RobotDrive driveMotors;
-    private double XJoy = 0;
-    private double YJoy = 0;
-    private double ZJoy = 0;
+    private double xPrevSpeed, XJoy = 0;
+    private double yPrevSpeed, YJoy = 0;
+    private double zPrevSpeed, ZJoy = 0;
     private OI COVOP;
-    private double Speed = DRIVE_MOTOR_MOD;
-    
-    private boolean mechaInverted;
+    private double speedAdj = DRIVE_MOTOR_MOD;
     
     //Contructor(s)
     public TrainDrive(OI oi){
@@ -21,53 +19,53 @@ public class TrainDrive implements RobotMap{
                                       RIGHT_FRONT_MOTOR, RIGHT_REAR_MOTOR);
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
-         mechaInverted = false;
   }
     
-//** Methods
+    //Methods(functions)
     public void MechaDrive(){
-        Speed = COVOP.SpeedJar(Speed);
-        XJoy = COVOP.getJoyValue(XAxis)*Speed;
-        YJoy = COVOP.getJoyValue(YAxis)*Speed;
-        ZJoy = COVOP.getJoyValue(ZAxis)*Speed;
-        ZJoy = Utils.power(ZJoy, 2);//Square the turn speed
         
-//        SmartDashboard.putNumber("XAxis", XJoy);
-//        SmartDashboard.putNumber("YAxis", YJoy);
-//        SmartDashboard.putNumber("ZAxis", ZJoy);
+        xPrevSpeed = XJoy = setSpeed(COVOP.getJoyValue(XAxis), xPrevSpeed) * speedAdj;
+        yPrevSpeed = YJoy = setSpeed(COVOP.getJoyValue(YAxis), yPrevSpeed) * speedAdj;
+        zPrevSpeed = ZJoy = setSpeed(COVOP.getJoyValue(ZAxis), zPrevSpeed) * speedAdj;
+        
+        if(ZJoy < 0)
+            ZJoy = Utils.power(ZJoy, 2) * -1;
+        else
+            ZJoy = Utils.power(ZJoy, 2);
+        
         
         driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
-        SmartDashboard.putNumber("ORCA Effeciency", Speed);
+        
+        SmartDashboard.putNumber("ORCA Effeciency", speedAdj);
     }
     
-    public void InvertMecha(){
-       if(!mechaInverted){
-           driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
-           driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-       }
-       mechaInverted = true;
-    }
-
-//*** Methods used for autonomous.
-    //Overide MechaDrive for use with autonomous
-    public void MechaDrive(double x,double y,double z){
-        if(!mechaInverted) InvertMecha();
-        driveMotors.mecanumDrive_Cartesian(x, y, z, 0);
-    }
-    
-    //Used for atonomous
-    public void driveLikeATank(double leftSpeed, double rightSpeed){
+    public void driveLikeATank(double leftSpeed, double rightSpeed){ //Used for atonomous
         driveMotors.tankDrive(leftSpeed, rightSpeed);
     }
     
-//** Methods used for test    
-    public void BoxDrive(){
-        Speed = COVOP.SpeedJar(Speed);
-        XJoy = COVOP.getXBoxAxisValue(LStickX)*Speed;
-        YJoy = COVOP.getXBoxAxisValue(LStickY)*Speed;
-        ZJoy = COVOP.getXBoxAxisValue(RStickX)*Speed;
+    public void InvertMecha(){
+        driveMotors.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        driveMotors.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+    }
+    
+    private double setSpeed(double cs, double ps){
+        double ms;
+        int ss = 1;
+        double maxSpeedIncrease = 0.20;
         
-        driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
+        if(cs < 0)
+            ss = -1;
+
+        //TODO: Handle a change from positive to negative or viceversa 
+
+        cs = Math.abs(cs);
+        ps = Math.abs(ps);
+
+        if(cs == 0 || cs <= ps || ps + maxSpeedIncrease > cs)
+            ms = cs;
+        else
+            ms = ps + maxSpeedIncrease;
+         
+        return ms * ss;
     }
 }
-
