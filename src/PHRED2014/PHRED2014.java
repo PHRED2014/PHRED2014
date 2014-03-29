@@ -72,6 +72,7 @@ public class PHRED2014 extends IterativeRobot implements RobotMap{
         trainDrive.MechaDrive();
         ObjMan.TankBelt(RStickY);
         ObjMan.VerticalFork(LStickY);
+        ObjMan.ForcDeploya(BumperR, BumperL);
         //SmartDashboard.putNumber("RStrickY: ", COVOP.getXBoxAxisValue(RStickY));
         //SmartDashboard.putNumber("RStrickX: ", COVOP.getXBoxAxisValue(RStickX));
         //SmartDashboard.putNumber("Incoder", ObjMan.GetEncoder());
