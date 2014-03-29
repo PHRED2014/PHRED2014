@@ -14,9 +14,9 @@ public class ObjM implements RobotMap{
     //Constructor(s)
     public ObjM(OI oi){
         COVOP = oi;
-        ForkMotor = new Victor(Forkport);
-        ArmMotor = new Victor(Armport);
-        BeltMotor = new Victor(Beltport);
+        //ForkMotor = new Victor(FORK_PORT);
+        //ArmMotor = new Victor(ARM_PORT);
+        //BeltMotor = new Victor(BELT_PORT);
     }
     
     //Methods

@@ -6,11 +6,11 @@ public class Autonomous implements RobotMap{
     
     //Instance variables
     private TrainDrive trainDrive;
-    private ObjM ObjMan;
+    //private ObjM ObjMan;
     
-    private PHREDSonic usFore = null;
-    private PHREDSonic usAft = null;
-    private PHREDSonic usForward = null;
+    //private PHREDSonic usFore = null;
+    //private PHREDSonic usAft = null;
+    //private PHREDSonic usForward = null;
 
     private double rangeFore, rangeAft, rangeDiff, endOfFirstLeg, endOfSecondLeg,
             rangeTolerance, turnSpeed, flDriveSpeed, slDriveSpeed, rangeForward,
@@ -19,14 +19,14 @@ public class Autonomous implements RobotMap{
     private boolean firstLeg;
     
     //Contstructor(s)
-    public Autonomous(TrainDrive td, ObjM om){
+    public Autonomous(TrainDrive td){
         trainDrive = td;
-        ObjMan = om;
+    //    ObjMan = om;
     }//End Constructor
     
     //Methods
-    public void initialize(int autoID, double[] autoSpeedSettings){
-        flDriveSpeed = autoSpeedSettings[FL_DRIVE_SPEED_IDX - 1] * -1;//Initialize to first leg drive speed
+    public void initialize(){
+/*        flDriveSpeed = autoSpeedSettings[FL_DRIVE_SPEED_IDX - 1] * -1;//Initialize to first leg drive speed
         slDriveSpeed = autoSpeedSettings[SL_DRIVE_SPEED_IDX - 1] * -1;//Initialize to second leg drive speed
 
         endOfFirstLeg = autoSpeedSettings[FL_RANGE_TO_GOAL_IDX - 1]; //1800 - Distance in millimeters from the goal
@@ -37,27 +37,27 @@ public class Autonomous implements RobotMap{
 //
         firstLeg = true;
         
-        if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
+        //if(usForward == null)usForward = new PHREDSonic(FRONT_ULTRA_P, FRONT_ULTRA_E);
         switch(autoID){
             case WALL_LEFT:{
-                if(usFore == null)usFore = new PHREDSonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
-                if(usAft == null)usAft = new PHREDSonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
+          //      if(usFore == null)usFore = new PHREDSonic(LEFT_FRONT_ULTRA_P,LEFT_FRONT_ULTRA_E);
+          //      if(usAft == null)usAft = new PHREDSonic(LEFT_REAR_ULTRA_P, LEFT_REAR_ULTRA_E);
                 break;
             }
             case WALL_RIGHT:{
-                if(usFore == null)usFore = new PHREDSonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
-                if(usAft == null)usAft = new PHREDSonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
+          //      if(usFore == null)usFore = new PHREDSonic(RIGHT_FRONT_ULTRA_P,RIGHT_FRONT_ULTRA_E);
+          //      if(usAft == null)usAft = new PHREDSonic(RIGHT_REAR_ULTRA_P, RIGHT_REAR_ULTRA_E);
                 break;
             }
             case CENTER:
             default:
-                Utils.timeReset();
+*/                Utils.timeReset();
                 Utils.timeStart();
                 flDriveSpeed = -0.5;//Initialize to first leg drive speed
                 timeOut = 3.0; //Seconds
 //                endOfFirstLeg = 3000;// ~10 feet
-                break;
-        }//End switch
+//                break;
+//        }//End switch
 
     }//End autoInit
     
@@ -71,7 +71,7 @@ public class Autonomous implements RobotMap{
     }
     
     public void scoreAGoal(int script){
-        
+/*        
         if(firstLeg){ //The first of two legs: Tankdrive parallel to the wall until 5-6ft from goal
             //Get the range forward
             rangeForward = getTheRange(usForward);
@@ -122,7 +122,7 @@ public class Autonomous implements RobotMap{
                     driveForGoal(MECANUM_RIGHT);
             }
         }
-    }
+*/    }
 
     private void driveForGoal(int direction){
         switch (direction){
