@@ -116,4 +116,8 @@ public class OI implements RobotMap{
     public boolean getXBoxButton(int button){
         return XStick.getRawButton(button);
     }
+    
+    public boolean isTriggerPressed(){
+        return MechStick.getTrigger();
+    }
 }
