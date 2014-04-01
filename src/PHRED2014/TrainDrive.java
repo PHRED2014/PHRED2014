@@ -7,6 +7,7 @@ public class TrainDrive implements RobotMap{
     
     //Instance variables: motors, sensors, etc.
     private RobotDrive driveMotors;
+    private RobotDrive reverseDriveMotors;
     private double xPrevSpeed, XJoy = 0;
     private double yPrevSpeed, YJoy = 0;
     private double zPrevSpeed, ZJoy = 0;
@@ -17,6 +18,9 @@ public class TrainDrive implements RobotMap{
     public TrainDrive(OI oi){
          driveMotors = new RobotDrive(LEFT_FRONT_MOTOR, LEFT_REAR_MOTOR, 
                                       RIGHT_FRONT_MOTOR, RIGHT_REAR_MOTOR);
+         reverseDriveMotors = new RobotDrive(RIGHT_REAR_MOTOR, RIGHT_FRONT_MOTOR,
+                                             LEFT_REAR_MOTOR, LEFT_FRONT_MOTOR);
+
          driveMotors.setSafetyEnabled(false);
          COVOP = oi;
   }
@@ -33,8 +37,12 @@ public class TrainDrive implements RobotMap{
         else
             ZJoy = Utils.power(ZJoy, 2);
         
+//        driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
         
-        driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
+        if(COVOP.isTriggerPressed())
+            reverseDriveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
+        else
+            driveMotors.mecanumDrive_Cartesian(-XJoy, -YJoy, -ZJoy, 0);
         
         SmartDashboard.putNumber("ORCA Effeciency", speedAdj);
     }

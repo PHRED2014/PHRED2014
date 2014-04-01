@@ -118,4 +118,8 @@ public class OI implements RobotMap{
         
         return num;
     }
+    
+    public boolean isTriggerPressed(){
+        return MechStick.getTrigger();
+    }
 }
